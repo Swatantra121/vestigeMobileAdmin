@@ -44,21 +44,30 @@ export class LoginComponent {
    * @return {void}
    * @description Used to submit login form.
    */
-  submit() {
-    debugger
+  submit(): void {
     if (this.loginForm.valid) {
       this.showLoader = true;
-      this.authService.login(this.loginForm.value)
-        .subscribe((data) => {
-          this.localStorage.set(myGlobals.STORAGE_KEYS.TOKEN_KEY, data.access_token);
-          this.localStorage.set(myGlobals.STORAGE_KEYS.DISTRIBUTOR_ID_KEY, data);
-          this.showLoader = false;
-          this.router.navigate(['\dashboard']);
+      this.authService.login(this.loginForm.value).subscribe(
+        data => {
+          this.handleSuccessfulLogin(data);
         },
-          error => {
-            this.alertService.error('login_failed');
-            this.showLoader = false;
-          });
+        error => {
+          this.handleError(error);
+        }
+      );
     }
+  }
+  private handleSuccessfulLogin(data: any): void {
+    this.localStorage.set(myGlobals.STORAGE_KEYS.TOKEN_KEY, data.access_token);
+    // Assuming data contains the distributor ID as a separate property
+    this.localStorage.set(myGlobals.STORAGE_KEYS.DISTRIBUTOR_ID_KEY, data.distributor_id);
+    this.showLoader = false;
+    this.router.navigate(['/dashboard']);
+  }
+  private handleError(error: any): void {
+    // Log error or send it to a monitoring service
+    console.error('Login error:', error);
+    this.alertService.error('login_failed');
+    this.showLoader = false;
   }
 }

@@ -24,8 +24,8 @@ export class AuthService {
   login(credentials) {
     debugger
      console.log(credentials);
-    // return this.apiService.post(Urls.ServiceEnum.Login, credentials);
-    return this.apiService.post('http://13.232.167.44:8080/auth/training-login', credentials)
+    return this.apiService.post(Urls.ServiceEnum.Login, credentials);
+    // return this.apiService.post('http://13.232.167.44:8080/auth/training-login', credentials)
   }
 
   signup(data) {
