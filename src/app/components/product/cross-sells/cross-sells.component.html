@@ -1,0 +1,178 @@
+<section class="main-content">
+  <div class="filters-container">
+    <form [formGroup]="searchForm">
+      <div class="filters-left">
+        <mat-form-field appearance="outline">
+          <mat-label> Search By</mat-label>
+          <mat-select formControlName="searchBy">
+            <mat-option *ngFor="let searchBy of searchByList" [value]="searchBy.value"> {{searchBy.key}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="search-control">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input type="text" (keyup)="searchProduct()" formControlName="search" matInput>
+          </mat-form-field>
+        </div>
+        <a (click)="showAdvanceFilter(!advanceFilterContainer)" class="btn" [ngClass]='!advanceFilterContainer ? "btn-default": "btn-primary"'>Advance Filter</a>
+      </div>
+    </form>
+
+    <div class="filters-right">
+      <a (click)="saveCrossSellsProducts()" class="btn btn-primary">Save</a>
+      <a (click)="routeTo()" routerLink="/product/up-sells" class="btn btn-primary">Skip</a>
+    </div>
+  </div>
+
+  <div class="advance-filter-form" *ngIf="advanceFilterContainer">
+      <form [formGroup]="filterForm" (submit)="getProductList()">
+        <div class="form-container">
+          <div class="row">
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+              <h6>Offer Price:</h6>
+              <div class="custom-row">
+                <div class="custom-grid-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>From</mat-label>
+                    <input type="number" formControlName="offerPriceFrom" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="custom-grid-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label>To</mat-label>
+                    <input type="number" formControlName="offerPriceTo" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="custom-grid-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label> Currency
+                    </mat-label>
+                    <mat-select formControlName="currency">
+                      <mat-option *ngFor="let currency of currencyList" [value]="currency.value"> {{currency.key}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="custom-row">
+                <div class="custom-grid-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label> Type
+                    </mat-label>
+                    <mat-select formControlName="productType">
+                      <mat-option *ngFor="let productType of productTypeList" [value]="productType.value"> {{productType.value}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="custom-grid-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label> Inventory Type
+                    </mat-label>
+                    <mat-select formControlName="inventoryType">
+                      <mat-option *ngFor="let inventory of inventoryTypeList" [value]="inventory">{{inventory}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="custom-grid-3">
+                  <mat-form-field appearance="outline">
+                    <mat-label> Visibility
+                    </mat-label>
+                    <mat-select formControlName="isVisibility">
+                        <mat-option *ngFor="let visibility of visibilityList" [value]="visibility.value">{{visibility.key}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+              <h6>ID:</h6>
+              <div class="custom-row">
+                <div class="custom-grid-2">
+                  <mat-form-field appearance="outline">
+                    <mat-label>From</mat-label>
+                    <input type="number" formControlName="idFrom" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="custom-grid-2">
+                  <mat-form-field appearance="outline">
+                    <mat-label>To</mat-label>
+                    <input type="number" formControlName="idTo" matInput>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <h6>WNS Sync at:</h6>
+              <div class="custom-row">
+                <div class="custom-grid-2">
+                  <mat-form-field class="date-control" appearance="outline">
+                    <mat-label>From</mat-label>
+                    <input matInput formControlName="WnsFrom"  [matDatepicker]="validFromPicker">
+                    <mat-datepicker-toggle matSuffix [for]="validFromPicker"></mat-datepicker-toggle>
+                    <mat-datepicker disabled #validFromPicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="custom-grid-2">
+                  <mat-form-field class="date-control" appearance="outline">
+                    <mat-label>To</mat-label>
+                    <input matInput formControlName="WnsTo"  [matDatepicker]="validToPicker">
+                    <mat-datepicker-toggle matSuffix  [for]="validToPicker"></mat-datepicker-toggle>
+                    <mat-datepicker disabled #validToPicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="custom-row">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a (click)="filterForm.reset()" class="btn btn-default">Reset</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  <div class="clearfix"></div>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <!-- <th><input type="checkbox" id="all" (change)="selectedAll($event)"><label for="all"></label></th> -->
+          <th width="6%">
+            <mat-checkbox class="example-margin" [(checked)]="crossSellsProductList.length === selectedProducts.length" (change)="selectedAll($event)"></mat-checkbox>
+          </th>
+          <th (click)="sort('i')" width="12%">ID</th>
+          <th width="12%">Name</th>
+          <th width="12%">Type</th>
+          <th width="12%">SKU</th>
+          <th width="12%">Price</th>
+          <th width="10%">Position</th>
+          <th width="12%">Visibility</th>
+          <th width="12%">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of crossSellsProductList, let i = index">
+          <td>
+            <mat-checkbox #checked class="example-margin" [checked]="product.checked" (change)="isChecked($event, product)"></mat-checkbox>
+          </td>
+          <td>{{ product.id }}</td>
+          <td>{{ product.productName }}</td>
+          <td>{{ product.productType }}</td>
+          <td>{{ product.skuCode }}</td>
+          <td>{{ product.offerPrice }}</td>
+          <td>
+            <mat-form-field appearance="outline">
+              <input type="number" #positionValue min="0" oninput="this.value = Math.abs(this.value)" (blur)="addPositionValue(positionValue.value, product.skuCode)" [value]="product.position"
+                [disabled]="!checked.checked" matInput>
+            </mat-form-field>
+          </td>
+          <td>{{ product.visibility }}</td>
+          <td>{{ product.status }}</td>
+        </tr>
+        <tr *ngIf="crossSellsProductList.length == 0">
+          <td colspan="9">No data Found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

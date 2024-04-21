@@ -1,0 +1,222 @@
+<section class="main-content">
+  <div class="filters-container">
+    <form [formGroup]="searchForm">
+      <div class="filters-left">
+        <mat-form-field appearance="outline">
+          <mat-label> Search By</mat-label>
+          <mat-select formControlName="searchBy">
+            <mat-option *ngFor="let searchBy of searchByList" [value]="searchBy.value"> {{searchBy.key}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="search-control">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input type="text" (keyup)="searchProduct()" formControlName="search" matInput>
+          </mat-form-field>
+        </div>
+        <a (click)="showAdvanceFilter(!advanceFilterContainer)" class="btn" [ngClass]='!advanceFilterContainer ? "btn-default": "btn-primary"'>Advance Filter</a>
+      </div>
+    </form>
+
+    <div class="filters-right">
+      <ul>
+        <li>
+          <label>Export Data:</label>
+        </li>
+        <li>
+          <a routerLink="/dashboard">
+            <img src="assets/images/xlsx-file-icon.svg" alt="">
+          </a>
+        </li>
+        <li>
+          <a routerLink="/dashboard">
+            <img src="assets/images/pdf-file-icon.svg" alt="">
+          </a>
+        </li>
+        <li>
+          <a routerLink="/dashboard">
+            <img src="assets/images/csv-file-icon.svg" alt="">
+          </a>
+        </li>
+      </ul>
+
+      <div class="action-control">
+        <mat-form-field appearance="outline">
+          <mat-label> Actions
+          </mat-label>
+          <mat-select #actionField>
+            <mat-option *ngFor="let action of actionList" [value]="action.value"> {{action.key}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button type="button" class="btn btn-primary" (click)="actionFunction(actionField.value)" [disabled]="this.selectedArray.length === 0">Submit</button>
+      </div>
+      <a (click)="routeTo()" routerLink="/product/product-setting" class="btn btn-primary">Add Product</a>
+    </div>
+  </div>
+  <div class="advance-filter-form" *ngIf="advanceFilterContainer">
+    <form [formGroup]="filterForm" (submit)="getProductList()">
+      <div class="form-container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+            <h6>Offer Price:</h6>
+            <div class="custom-row">
+              <div class="custom-grid-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>From</mat-label>
+                  <input type="number" formControlName="offerPriceFrom" matInput>
+                </mat-form-field>
+              </div>
+              <div class="custom-grid-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>To</mat-label>
+                  <input type="number" formControlName="offerPriceTo" matInput>
+                </mat-form-field>
+              </div>
+              <div class="custom-grid-3">
+                <mat-form-field appearance="outline">
+                  <mat-label> Currency
+                  </mat-label>
+                  <mat-select formControlName="currency">
+                    <mat-option *ngFor="let currency of currencyList" [value]="currency.value"> {{currency.key}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="custom-row">
+              <div class="custom-grid-3">
+                <mat-form-field appearance="outline">
+                  <mat-label> Type
+                  </mat-label>
+                  <mat-select formControlName="productType">
+                    <mat-option *ngFor="let productType of productTypeList" [value]="productType.value"> {{productType.value}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="custom-grid-3">
+                <mat-form-field appearance="outline">
+                  <mat-label> Inventory Type
+                  </mat-label>
+                  <mat-select formControlName="inventoryType">
+                    <mat-option *ngFor="let inventory of inventoryTypeList" [value]="inventory">{{inventory}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="custom-grid-3">
+                <mat-form-field appearance="outline">
+                  <mat-label> Visibility
+                  </mat-label>
+                  <mat-select formControlName="isVisibility">
+                    <mat-option *ngFor="let visibility of visibilityList" [value]="visibility.value">{{visibility.key}} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+            <h6>ID:</h6>
+            <div class="custom-row">
+              <div class="custom-grid-2">
+                <mat-form-field appearance="outline">
+                  <mat-label>From</mat-label>
+                  <input type="number" formControlName="idFrom" matInput>
+                </mat-form-field>
+              </div>
+              <div class="custom-grid-2">
+                <mat-form-field appearance="outline">
+                  <mat-label>To</mat-label>
+                  <input type="number" formControlName="idTo" matInput>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <h6>WNS Sync at:</h6>
+            <div class="custom-row">
+              <div class="custom-grid-2">
+                <mat-form-field class="date-control" appearance="outline">
+                  <mat-label>From</mat-label>
+                  <input matInput formControlName="WnsFrom" [matDatepicker]="validFromPicker">
+                  <mat-datepicker-toggle matSuffix [for]="validFromPicker"></mat-datepicker-toggle>
+                  <mat-datepicker disabled #validFromPicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="custom-grid-2">
+                <mat-form-field class="date-control" appearance="outline">
+                  <mat-label>To</mat-label>
+                  <input matInput formControlName="WnsTo" [matDatepicker]="validToPicker">
+                  <mat-datepicker-toggle matSuffix [for]="validToPicker"></mat-datepicker-toggle>
+                  <mat-datepicker disabled #validToPicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="custom-row">
+              <div class="group-btn">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a (click)="filterForm.reset()" class="btn btn-default">Reset</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="clearfix"></div>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>
+            <mat-checkbox class="example-margin" [(ngModel)]="isAllSelected" (change)="selectedAll()"></mat-checkbox>
+          </th>
+          <th (click)="sort('i')">ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>SKU</th>
+          <th>Offer Price</th>
+          <th>Stock Availability</th>
+          <th>WNS Sync At</th>
+          <th>Inventory Type</th>
+          <th>Publish</th>
+          <th>Visibility</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of productList">
+          <td>
+            <mat-checkbox class="example-margin" [checked]="product.checked" (change)="isChecked($event, product)" [checked]="product.checked"></mat-checkbox>
+          </td>
+          <td>{{ product.id }}</td>
+          <td>{{ product.productName }}</td>
+          <td>{{product.productType}}</td>
+          <td>{{ product.skuCode }}</td>
+          <td>{{product.offerPrice}}</td>
+          <td>{{product.isStockAvailability}}</td>
+          <td></td>
+          <td>{{ product.inventoryType }}</td>
+          <td>
+            <button *ngIf="!product.isPublish" (click)="publishProduct(product.skuCode)" type="button" class="btn btn-primary">Publish</button>
+            <span *ngIf="product.isPublish">{{product.isPublish}}</span>
+          </td>
+          <td>{{ product.visibility }}</td>
+          <td>{{ product.status }}</td>
+          <td>
+              <a>
+                <span class="glyphicon glyphicon-pencil" (click)="editProduct(product.skuCode)" aria-hidden="true"></span>
+              </a>
+              <a>
+                <span class="glyphicon glyphicon-trash" (click)="deleteProduct([product.skuCode])" aria-hidden="true"></span>
+              </a>
+        </tr>
+        <tr *ngIf="productList.length == 0">
+          <td colspan="13">No data Found</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <mat-paginator *ngIf="locationList.length === 0" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator> -->
+  </div>
+</section>

@@ -1,0 +1,50 @@
+<section class="main-content">
+  <div class="form-container">
+    <form name="productMetaInfo" [formGroup]="productMetaInfo" (submit)="saveProductMetaInformation()" role="form">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field class="textarea-control" appearance="outline">
+              <mat-label>Meta Title
+              </mat-label>
+              <input type="text" formControlName="title" matInput>
+              <mat-error *ngIf="productMetaInfo.controls.title.touched && productMetaInfo.controls.title.invalid">
+                <span *ngIf="productMetaInfo.controls.title.errors.required">This field is mandatory.</span>
+                <span *ngIf="productMetaInfo.controls.title.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Meta Description
+              </mat-label>
+              <textarea type="text" formControlName="description" matInput></textarea>
+              <mat-error *ngIf="productMetaInfo.controls.description.touched && productMetaInfo.controls.description.invalid">
+                <span *ngIf="productMetaInfo.controls.description.errors.required">This field is mandatory.</span>
+                <span *ngIf="productMetaInfo.controls.description.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+          <div class="form-group">
+            <mat-form-field class="textarea-control" appearance="outline">
+              <mat-label>Meta Keyword
+              </mat-label>
+              <input type="text" formControlName="keywords" matInput>
+              <mat-error *ngIf="productMetaInfo.controls.keywords.touched && productMetaInfo.controls.keywords.invalid">
+                <span *ngIf="productMetaInfo.controls.keywords.errors.required">This field is mandatory.</span>
+                <span *ngIf="productMetaInfo.controls.keywords.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="text-right group-btn">
+        <button type="button" class="btn btn-default" (click)="onSkip()" type="submit">Skip</button>
+        <button type="button" class="btn btn-primary" type="submit" [disabled]="!productMetaInfo.value.title && !productMetaInfo.value.description && !productMetaInfo.value.keywords">Save</button>
+      </div>
+
+    </form>
+  </div>
+</section>

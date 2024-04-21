@@ -1,0 +1,232 @@
+<section class="main-content">
+  <form name="productPriceForm" [formGroup]="productPriceForm" role="form">
+    <div class="form-container">
+      <h6>Fields marked with <span>*</span> are mandatory to filled</h6>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>MRP
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="number" formControlName="mrp" matInput>
+              <mat-error *ngIf="productPriceForm.controls.mrp.touched && productPriceForm.controls.mrp.invalid">
+                <span *ngIf="productPriceForm.controls.mrp.errors.required">This field is mandatory.</span>
+                <span *ngIf="productPriceForm.controls.mrp.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Offer Price
+              </mat-label>
+              <input type="number" formControlName="offerPrice" matInput>
+              <mat-error *ngIf="productPriceForm.controls.offerPrice.touched && productPriceForm.controls.offerPrice.invalid">
+                <span *ngIf="productPriceForm.controls.offerPrice.errors.required">This field is mandatory.</span>
+                <span *ngIf="productPriceForm.controls.offerPrice.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Base Cost
+              </mat-label>
+              <input type="number" formControlName="baseCost" pattern="[0-9]*" matInput>
+              <mat-error *ngIf="productPriceForm.controls.baseCost.touched && productPriceForm.controls.baseCost.invalid">
+                <span *ngIf="productPriceForm.controls.baseCost.errors.required">This field is mandatory.</span>
+                <span *ngIf="productPriceForm.controls.baseCost.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field class="date-control">
+              <mat-label>Offer Price from Date</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromPicker" formControlName="offerPriceValidFrom" placeholder="Choose a date"
+                appearance="outline">
+              <mat-datepicker-toggle matSuffix [for]="validFromPicker"></mat-datepicker-toggle>
+              <mat-datepicker #validFromPicker></mat-datepicker>
+              <mat-error *ngIf="productPriceForm.controls.offerPriceValidFrom.touched && productPriceForm.controls.offerPriceValidFrom.invalid"
+                class="error-container">
+                <span *ngIf="productPriceForm.controls.offerPriceValidFrom.errors.required" class="error-msg">This field is mandatory.</span>
+                <span *ngIf="productPriceForm.controls.offerPriceValidFrom.errors.pattern" class="error-msg">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+
+            <mat-form-field class="date-control">
+              <mat-label>Offer Price to Date</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validToPicker" formControlName="offerPriceValidTo" placeholder="Choose a date"
+                appearance="outline">
+              <mat-datepicker-toggle matSuffix [for]="validToPicker"></mat-datepicker-toggle>
+              <mat-datepicker #validToPicker></mat-datepicker>
+              <mat-error *ngIf="productPriceForm.controls.offerPriceValidTo.touched && productPriceForm.controls.offerPriceValidTo.invalid"
+                class="error-container">
+                <span *ngIf="productPriceForm.controls.offerPriceValidTo.errors.required" class="error-msg">This field is mandatory.</span>
+                <span *ngIf="productPriceForm.controls.offerPriceValidTo.errors.pattern" class="error-msg">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Tax Category
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="Tax Category" formControlName="taxClass">
+                <mat-option *ngFor="let tax of taxCategory" [value]="tax">
+                  {{tax}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productPriceForm.controls.taxClass.touched && productPriceForm.controls.taxClass.invalid">
+                <span *ngIf="productPriceForm.controls.taxClass.errors.required">This field is mandatory.</span>
+                <span *ngIf="productPriceForm.controls.taxClass.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Manufacturer's Suggested Selling Price
+              </mat-label>
+              <input type="number" formControlName="manufactureSuggestedPrice" matInput>
+              <mat-error *ngIf="productPriceForm.controls.manufactureSuggestedPrice.touched && productPriceForm.controls.manufactureSuggestedPrice.invalid">
+                <span *ngIf="productPriceForm.controls.manufactureSuggestedPrice.errors.required">This field is mandatory.</span>
+                <span *ngIf="productPriceForm.controls.manufactureSuggestedPrice.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <h5>Group Price</h5>
+      <div formArrayName="groupPrice">
+        <div *ngFor="let item of productPriceForm.controls.groupPrice['controls']; let i = index;" class="row">
+          <div [formGroupName]="i">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="form-group">
+                <mat-form-field appearance="outline">
+                  <mat-label> Customer Group
+                  </mat-label>
+                  <mat-select placeholder="Customer Group" formControlName="customerGroup">
+                    <mat-option *ngFor="let customer of customerGroupSelection" [value]="customer.value">
+                      {{customer.key}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="item.controls.customerGroup.touched && item.controls.customerGroup.invalid">
+                    <span *ngIf="item.controls.customerGroup.errors.required">This field is mandatory.</span>
+                    <span *ngIf="item.controls.customerGroup.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="form-group">
+                <mat-form-field appearance="outline">
+                  <mat-label>Price
+                  </mat-label>
+                  <input type="number" formControlName="price" matInput>
+                  <mat-error *ngIf="item.controls.price.touched && item.controls.price.invalid">
+                    <span *ngIf="item.controls.price.errors.required">This field is mandatory.</span>
+                    <span *ngIf="item.controls.price.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="form-group group-btn">
+                <button type="button" class="btn btn-primary" (click)="addGroupPrice()" [disabled]="i != productPriceForm.controls.groupPrice.controls.length-1">Add Group Price</button>
+                <button *ngIf="i>0" type="button" class="btn btn-default" (click)="deleteGroupPrice(i)">Delete</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-container">
+      <h5>Tier Price</h5>
+      <div formArrayName="tierPrice">
+        <div class="row" *ngFor="let tierPrice of productPriceForm.controls.tierPrice['controls']; let i = index;">
+          <div [formGroupName]="i">
+
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="form-group">
+                <mat-form-field appearance="outline">
+                  <mat-label> Customer Group
+                  </mat-label>
+                  <mat-select placeholder="Customer Group" formControlName="customerGroup">
+                    <mat-option *ngFor="let customer of customerGroupSelection" [value]="customer.value">
+                      {{customer.key}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="tierPrice.controls.customerGroup.touched && tierPrice.controls.customerGroup.invalid">
+                    <span *ngIf="tierPrice.controls.customerGroup.errors.required">This field is mandatory.</span>
+                    <span *ngIf="tierPrice.controls.customerGroup.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="form-group">
+                <mat-form-field appearance="outline">
+                  <mat-label>Qty
+                  </mat-label>
+                  <input type="number" formControlName="quantity" matInput>
+                  <mat-error *ngIf="tierPrice.controls.quantity.touched && tierPrice.controls.quantity.invalid">
+                    <span *ngIf="tierPrice.controls.quantity.errors.required">This field is mandatory.</span>
+                    <span *ngIf="tierPrice.controls.quantity.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="form-group">
+                <mat-form-field appearance="outline">
+                  <mat-label>Price
+                  </mat-label>
+                  <input type="number" formControlName="price" matInput>
+                  <mat-error *ngIf="tierPrice.controls.price.touched && tierPrice.controls.price.invalid">
+                    <span *ngIf="tierPrice.controls.price.errors.required">This field is mandatory.</span>
+                    <span *ngIf="tierPrice.controls.price.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+              <div class="form-group group-btn">
+                <button class="btn btn-primary" type="button" (click)="addTierPrice()" [disabled]="i !== productPriceForm.controls.tierPrice.controls.length-1">Add Tier Price</button>
+                <button *ngIf="i>0" type="button" class="btn btn-default" (click)="deleteTierPrice(i)">Delete</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-container">
+      <div class="form-group text-right">
+        <button type="button" class="btn btn-primary" (click)="saveProductPriceInformation()" type="submit" [disabled]="!productPriceForm.valid">Save</button>
+      </div>
+    </div>
+  </form>
+</section>

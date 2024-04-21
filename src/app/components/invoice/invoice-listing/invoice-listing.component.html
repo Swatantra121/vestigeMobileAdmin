@@ -1,0 +1,139 @@
+<section class="main-content">
+  <div class="filters-container">
+    <div class="filters-left">
+      <mat-form-field appearance="outline">
+        <mat-label> Search By</mat-label>
+        <mat-select >
+          <mat-option>  </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="search-control">
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+      </div>
+      <a (click)="showAdvanceFilter(!advanceFilterContainer)" class="btn btn-default">Advance
+                        Filter</a>
+    </div>
+    <div class="filters-right">
+      <ul>
+        <li><label>Export Data:</label></li>
+        <li><a routerLink="/dashboard"><img src="assets/images/pdf-file-icon.svg" alt=""></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Invoice No.<a href="javascript:void(0)"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a></th>
+          <th>Invoice Date<a href="javascript:void(0)"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a></th>
+          <th>Order No.<a href="javascript:void(0)"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a></th>
+          <th>Order Date<a href="javascript:void(0)"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a></th>
+          <th>Bill to Name</th>
+          <th>Amount</th>
+          <th>Status<a href="javascript:void(0)"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a></th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="viewInvoice()">
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+        <tr>
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+        <tr>
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+        <tr>
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+        <tr>
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+        <tr>
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+        <tr>
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+        <tr>
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+        <tr>
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+        <tr>
+          <td>2854</td>
+          <td>7 Dec 2018, 3:00 PM</td>
+          <td>2854</td>
+          <td>Nov 13, 2018, 04:30:13 PM</td>
+          <td>Bhanu Pratap Singh</td>
+          <td>₹ 345000</td>
+          <td>Enabled</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/site.js"></script>

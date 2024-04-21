@@ -1,0 +1,142 @@
+<main>
+  <section class="main-content">
+      <div class="filters-container">
+          <form [formGroup]="searchForm">
+            <div class="filters-left">
+              <mat-form-field appearance="outline">
+                <mat-label> Search By</mat-label>
+                <mat-select formControlName="searchBy">
+                  <mat-option *ngFor="let searchBy of searchByList" [value]="searchBy.value"> {{searchBy.key}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+      
+              <div class="search-control">
+                <mat-form-field appearance="outline">
+                  <mat-label>Search</mat-label>
+                  <input type="text" (keyup)="searchProduct()" formControlName="search" matInput>
+                </mat-form-field>
+              </div>
+              <a (click)="showAdvanceFilter(!advanceFilterContainer)" class="btn" [ngClass]='!advanceFilterContainer ? "btn-default": "btn-primary"'>Advance Filter</a>
+            </div>
+          </form>
+      
+          <div class="filters-right">
+            <button (click)="saveCategoryProduct()" [disabled]="isSubmit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+        <div class="advance-filter-form" *ngIf="advanceFilterContainer">
+            <form [formGroup]="filterForm" (submit)="getAllProductListing()">
+              <div class="form-container">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                    <h6>Offer Price:</h6>
+                    <div class="custom-row">
+                      <div class="custom-grid-3">
+                        <mat-form-field appearance="outline">
+                          <mat-label>From</mat-label>
+                          <input type="number" formControlName="offerPriceFrom" matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="custom-grid-3">
+                        <mat-form-field appearance="outline">
+                          <mat-label>To</mat-label>
+                          <input type="number" formControlName="offerPriceTo" matInput>
+                        </mat-form-field>
+                      </div>
+                    
+                    </div>
+                    <div class="custom-row">
+                      <div class="custom-grid-3">
+                        <mat-form-field appearance="outline">
+                          <mat-label> Type
+                          </mat-label>
+                          <mat-select formControlName="productType">
+                            <mat-option *ngFor="let productType of productTypeList" [value]="productType.value"> {{productType.value}} </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                   
+                    
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                    <h6>ID:</h6>
+                    <div class="custom-row">
+                      <div class="custom-grid-2">
+                        <mat-form-field appearance="outline">
+                          <mat-label>From</mat-label>
+                          <input type="number" formControlName="idFrom" matInput>
+                        </mat-form-field>
+                      </div>
+                      <div class="custom-grid-2">
+                        <mat-form-field appearance="outline">
+                          <mat-label>To</mat-label>
+                          <input type="number" formControlName="idTo" matInput>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="custom-row">
+                      <div class="group-btn">
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                          <a (click)="filterForm.reset()" class="btn btn-default">Reset</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+    <div class="clearfix"></div>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>
+              <mat-checkbox class="example-margin" [(checked)]="productCatalogue.length === selectedProducts.length" (change)="selectedAll($event)"></mat-checkbox>
+            </th>
+            <th>
+              ID
+              <a (click)="sort('id')"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a>
+            </th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>SKU</th>
+            <th>
+              Offer Price
+              <a (click)="sort('offerPrice')"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a>
+            </th>
+            <th>
+              Position
+              <a (click)="sort('position')"><span class="glyphicon glyphicon-sort" aria-hidden="true"></span></a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of productCatalogue | orderBy: {property: column, direction: direction}">
+            <td>
+              <mat-checkbox class="example-margin" #checked [checked]="product.checked" (change)="isChecked($event, product)"></mat-checkbox>
+            </td>
+            <td>{{ product.id }}</td>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.productType }}</td>
+            <td>{{ product.skuCode }}</td>
+            <td>{{ product.offerPrice }}</td>
+            <!-- <td>{{ product.stockAvailability }}</td> -->
+            <td>
+              <mat-form-field class="textarea-control" appearance="outline">
+                <input type="number" #positionValue (blur)="addPositionValue(positionValue.value, product.skuCode)" [value]="product.categories ? product.categories.position : '' "
+                  [disabled]="!checked.checked" matInput>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr *ngIf="productCatalogue.length == 0">
+              <td colspan="9">No data Found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>

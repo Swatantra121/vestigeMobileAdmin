@@ -1,0 +1,45 @@
+<section class="main-content">
+  <div class="form-container">
+    <form name="productSetting" [formGroup]="productSettingForm" role="form">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Associate to Website
+              </mat-label>
+              <mat-select placeholder="Associate to Website" formControlName="associateWebsite">
+                <mat-option *ngFor="let associate of associateWebsite" [value]="associate">
+                  {{associate.value}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productSettingForm.controls.associateWebsite.touched && productSettingForm.controls.associateWebsite.invalid">
+                <span *ngIf="productSettingForm.controls.associateWebsite.errors.required">This field is mandatory.</span>
+                <span *ngIf="productSettingForm.controls.associateWebsite.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Product Type
+              </mat-label>
+              <mat-select placeholder="Product Type" formControlName="productType">
+                <mat-option *ngFor="let productType of productTypeData" [value]="productType.value">
+                  {{productType.value}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productSettingForm.controls.productType.touched && productSettingForm.controls.productType.invalid">
+                <span *ngIf="productSettingForm.controls.productType.errors.required">This field is mandatory.</span>
+                <span *ngIf="productSettingForm.controls.productType.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <button type="button" class="btn btn-primary" (click)="saveProduct()" type="submit" [disabled]="!productSettingForm.valid">Save</button>
+      </div>
+    </form>
+  </div>
+</section>

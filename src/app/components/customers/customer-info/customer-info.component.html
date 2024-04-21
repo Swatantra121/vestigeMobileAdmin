@@ -1,0 +1,131 @@
+﻿<section class="main-content">
+      <div class="clearfix"></div>
+      <h6>Personal Information</h6>
+      <div class="form-container">
+        <form name="customerInfo" [formGroup]="customerInfoForm" (submit)="submit()" role="form">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                  <mat-label>Last Logged In
+                  </mat-label>
+                  <input type="text"  matInput formControlName="loggedIn">
+                  <mat-error *ngIf="customerInfoForm.controls.loggedIn.touched && customerInfoForm.controls.loggedIn.invalid">
+                    <span *ngIf="customerInfoForm.controls.loggedIn.errors.required">This field is mandatory.</span>
+                    <span *ngIf="customerInfoForm.controls.loggedIn.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+            </div>
+            
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+      
+              <mat-form-field appearance="outline">
+                  <mat-label>Confirmed email
+                  </mat-label>
+                  <input type="text"  matInput formControlName="email">
+                  <mat-error *ngIf="customerInfoForm.controls.email.touched && customerInfoForm.controls.email.invalid">
+                    <span *ngIf="customerInfoForm.controls.email.errors.required">This field is mandatory.</span>
+                    <span *ngIf="customerInfoForm.controls.email.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+            
+              <mat-form-field appearance="outline">
+                  <mat-label>Account Created on
+                  </mat-label>
+                  <input type="text"  matInput formControlName="createdOn">
+                  <mat-error *ngIf="customerInfoForm.controls.createdOn.touched && customerInfoForm.controls.createdOn.invalid">
+                    <span *ngIf="customerInfoForm.controls.createdOn.errors.required">This field is mandatory.</span>
+                    <span *ngIf="customerInfoForm.controls.createdOn.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+           
+              <mat-form-field appearance="outline">
+                  <mat-label>Default Billing Address
+                  </mat-label>
+                  <textarea type="text"  matInput formControlName="billingAddress"></textarea>
+                  <mat-error *ngIf="customerInfoForm.controls.billingAddress.touched && customerInfoForm.controls.billingAddress.invalid">
+                    <span *ngIf="customerInfoForm.controls.billingAddress.errors.required">This field is mandatory.</span>
+                    <span *ngIf="customerInfoForm.controls.billingAddress.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                  <mat-label>Account Created in
+                  </mat-label>
+                  <input type="text"  matInput formControlName="createdIn">
+                  <mat-error *ngIf="customerInfoForm.controls.createdIn.touched && customerInfoForm.controls.createdIn.invalid">
+                    <span *ngIf="customerInfoForm.controls.createdIn.errors.required">This field is mandatory.</span>
+                    <span *ngIf="customerInfoForm.controls.createdIn.errors.pattern">This field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+                <mat-form-field appearance="outline">
+                    <mat-label>Customer Group
+                    </mat-label>
+                    <input type="text"  matInput formControlName="customerGroup">
+                    <mat-error *ngIf="customerInfoForm.controls.customerGroup.touched && customerInfoForm.controls.customerGroup.invalid">
+                      <span *ngIf="customerInfoForm.controls.customerGroup.errors.required">This field is mandatory.</span>
+                      <span *ngIf="customerInfoForm.controls.customerGroup.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                  </mat-form-field>
+              </div>
+        </div>
+        <div class="text-right group-btn">
+            <button type="button" class="btn btn-default">Create Order</button>
+            <button type="button" class="btn btn-default">Delete Customer</button>
+            <button type="button" class="btn btn-primary">Save</button>
+        </div>
+        </div>
+      </form>
+      </div>
+
+      <div class="form-container">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Website</th>
+                <th>Store</th>
+                <th>Lifetime Sales</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>http://www.vestigebestdeals.com/</td>
+                <td>VBD Store 1</td>
+                <td>₹ 34.5000</td>
+                <td>₹ 34.5000</td>
+              </tr>
+              <tr>
+                <td>http://www.vestigebestdeals.com/</td>
+                <td>VBD Store 2</td>
+                <td>₹ 34.5000</td>
+                <td>₹ 34.5000</td>
+              </tr>
+              <tr>
+
+                <td colspan="3"></td>
+                <td>₹ 39,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>

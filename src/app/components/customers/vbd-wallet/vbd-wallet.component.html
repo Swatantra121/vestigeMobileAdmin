@@ -1,0 +1,95 @@
+<section class="main-content">
+    <div class="clearfix"></div>
+    <div class="form-container">
+            <h5>Credit Information</h5>
+        <form name="vbdWallet" [formGroup]="vbdWalletForm" (submit)="submit()" role="form">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Current Credit Balance
+                            </mat-label>
+                            <input type="text" formControlName="creditBalance" matInput>
+                            <mat-error *ngIf="vbdWalletForm.controls.creditBalance.touched && vbdWalletForm.controls.creditBalance.invalid">
+                                <span *ngIf="vbdWalletForm.controls.creditBalance.errors.required">This field is mandatory.</span>
+                                <span *ngIf="vbdWalletForm.controls.creditBalance.errors.pattern">This field is invalid.</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Add or subtract a credit value
+                            </mat-label>
+                            <input type="text" formControlName="creditValue" matInput>
+                            <mat-error *ngIf="vbdWalletForm.controls.creditValue.touched && vbdWalletForm.controls.creditValue.invalid">
+                                <span *ngIf="vbdWalletForm.controls.creditValue.errors.required">This field is mandatory.</span>
+                                <span *ngIf="vbdWalletForm.controls.creditValue.errors.pattern">This field is invalid.</span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>Comment
+                            </mat-label>
+                            <input type="text" formControlName="comment" matInput>
+                            <mat-error *ngIf="vbdWalletForm.controls.comment.touched && vbdWalletForm.controls.comment.invalid">
+                                <span *ngIf="vbdWalletForm.controls.comment.errors.required">This field is mandatory.</span>
+                                <span *ngIf="vbdWalletForm.controls.comment.errors.pattern">This field is invalid.</span>
+                            </mat-error>
+                        </mat-form-field>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" /> <label>Send email to customer</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h5>Transaction History</h5>
+        <div class="filters-left">
+            <mat-form-field appearance="outline">
+                <mat-label> Search By</mat-label>
+                <mat-select>
+                    <mat-option> </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="search-control">
+                <mat-form-field appearance="outline">
+                    <mat-label>Search</mat-label>
+                    <input type="text" matInput>
+                </mat-form-field>
+            </div>
+            <a (click)="showAdvanceFilter(!advanceFilterContainer)" class="btn btn-default">Advance Filter</a>
+        </div>
+        <div class="clearfix"></div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type of Transaction</th>
+                        <th>Transaction Detail</th>
+                        <th>Added/Substracted</th>
+                        <th>Credit Balance</th>
+                        <th>Transaction Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

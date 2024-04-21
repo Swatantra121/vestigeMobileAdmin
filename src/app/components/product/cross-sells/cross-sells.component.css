@@ -1,0 +1,9 @@
+.position-field{
+        width: 101px;
+        height: 25px;
+}
+
+.table tr td .mat-form-field-appearance-outline .mat-form-field-wrapper{
+        margin: 0;
+        padding-bottom: 0;
+}

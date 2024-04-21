@@ -1,0 +1,55 @@
+<section class="main-content">
+  <div class="form-container">
+    <form name="categoryMetaInformation" [formGroup]="categoryMetaInformationForm" (submit)="submit()" role="form">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Meta Title </mat-label>
+              <input type="text" formControlName="title" matInput>
+              <mat-error *ngIf="categoryMetaInformationForm.controls.title.touched && categoryMetaInformationForm.controls.title.invalid">
+                <span *ngIf="categoryMetaInformationForm.controls.title.errors.required">This field is mandatory.</span>
+                <span *ngIf="categoryMetaInformationForm.controls.title.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Meta Keywords</mat-label>
+              <input type="text" formControlName="keyword" matInput>
+              <mat-error *ngIf="categoryMetaInformationForm.controls.keyword.touched && categoryMetaInformationForm.controls.keyword.invalid"
+                class="error-container">
+                <span *ngIf="categoryMetaInformationForm.controls.keyword.errors.required" class="error-msg">This field is
+                  mandatory.
+                </span>
+                <span *ngIf="categoryMetaInformationForm.controls.keyword.errors.pattern" class="error-msg">This field is
+                  invalid.
+                </span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field class="textarea-control" appearance="outline">
+              <mat-label>Meta Description</mat-label>
+              <textarea type="text" matInput formControlName="description"></textarea>
+              <mat-error *ngIf="categoryMetaInformationForm.controls.description.touched && categoryMetaInformationForm.controls.description.invalid"
+                class="error-container">
+                <span *ngIf="categoryMetaInformationForm.controls.description.errors.required" class="error-msg">This field
+                  is mandatory.</span>
+                <span *ngIf="categoryMetaInformationForm.controls.description.errors.pattern" class="error-msg">This field
+                  is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <button class="btn btn-primary" type="submit" [disabled]="!categoryMetaInformationForm.valid">Save</button>
+      </div>
+    </form>
+  </div>
+</section>

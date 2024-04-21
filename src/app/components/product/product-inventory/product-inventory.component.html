@@ -1,0 +1,305 @@
+<section class="main-content">
+  <div class="form-container">
+    <h6>Fields marked with <span>*</span> are mandatory to filled</h6>
+    <form name="productInventory" [formGroup]="productInventoryForm" role="form">
+      <div class="row">
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label> Manage Stock
+            </mat-label>
+            <mat-select placeholder="Manage Stock" formControlName="isManageStock">
+              <mat-option *ngFor="let manageStock of manageStock" [value]="manageStock.value">
+                {{manageStock.key}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="productInventoryForm.controls.isManageStock.touched && productInventoryForm.controls.isManageStock.invalid">
+              <span *ngIf="productInventoryForm.controls.isManageStock.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.isManageStock.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label> Total Qty
+              <sup class="error">*</sup>
+            </mat-label>
+            <input type="number" formControlName="quantity" matInput>
+            <mat-error *ngIf="productInventoryForm.controls.quantity.touched && productInventoryForm.controls.quantity.invalid">
+              <span *ngIf="productInventoryForm.controls.quantity.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.quantity.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label> Qty for Item's Status to Become Out of Stock
+            </mat-label>
+            <input type="number" formControlName="quantityForOutOfStock" matInput>
+            <mat-error *ngIf="productInventoryForm.controls.quantityForOutOfStock.touched && productInventoryForm.controls.quantityForOutOfStock.invalid">
+              <span *ngIf="productInventoryForm.controls.quantityForOutOfStock.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.quantityForOutOfStock.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label> Minimum Qty Allowed in Shopping Cart
+            </mat-label>
+            <input type="number" formControlName="minQuantityAllowedInCart" matInput>
+            <mat-error *ngIf="productInventoryForm.controls.minQuantityAllowedInCart.touched && productInventoryForm.controls.minQuantityAllowedInCart.invalid">
+              <span *ngIf="productInventoryForm.controls.minQuantityAllowedInCart.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.minQuantityAllowedInCart.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Maximum Qty Allowed in Shopping Cart
+            </mat-label>
+            <input type="number" formControlName="maxQuantityAllowedInCart" matInput>
+            <mat-error *ngIf="productInventoryForm.controls.maxQuantityAllowedInCart.touched && productInventoryForm.controls.maxQuantityAllowedInCart.invalid">
+              <span *ngIf="productInventoryForm.controls.maxQuantityAllowedInCart.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.maxQuantityAllowedInCart.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label> Qty Uses Decimals
+            </mat-label>
+            <mat-select placeholder="Qty Uses Decimals" formControlName="isQuantityUsesDecimal">
+              <mat-option *ngFor="let decimal of quantityUsesDecimal" [value]="decimal.value">
+                {{decimal.key}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="productInventoryForm.controls.isQuantityUsesDecimal.touched && productInventoryForm.controls.isQuantityUsesDecimal.invalid">
+              <span *ngIf="productInventoryForm.controls.isQuantityUsesDecimal.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.isQuantityUsesDecimal.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label> Can be Divided into Multiple Boxes for Shipping
+            </mat-label>
+            <mat-select placeholder="Qty Uses Decimals" formControlName="isDividedIntoMultibox">
+              <mat-option *ngFor="let shipping of multipleShipping" [value]="shipping.value">
+                {{shipping.key}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="productInventoryForm.controls.isDividedIntoMultibox.touched && productInventoryForm.controls.isDividedIntoMultibox.invalid">
+              <span *ngIf="productInventoryForm.controls.isDividedIntoMultibox.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.isDividedIntoMultibox.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label> Backorders
+            </mat-label>
+            <mat-select placeholder="Backorders" formControlName="backOrders">
+              <mat-option *ngFor="let backOrders of backorderList" [value]="backOrders.value">
+                {{backOrders.value}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="productInventoryForm.controls.backOrders.touched && productInventoryForm.controls.backOrders.invalid">
+              <span *ngIf="productInventoryForm.controls.backOrders.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.backOrders.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Notify for Quantity Below
+            </mat-label>
+            <input type="number" formControlName="belowQuantityNotify" matInput>
+            <mat-error *ngIf="productInventoryForm.controls.belowQuantityNotify.touched && productInventoryForm.controls.belowQuantityNotify.invalid">
+              <span *ngIf="productInventoryForm.controls.belowQuantityNotify.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.belowQuantityNotify.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label> Enable Qty Increments
+            </mat-label>
+            <mat-select placeholder="Enable Qty Increments" formControlName="isEnableQuantityIncrement">
+              <mat-option *ngFor="let enableIncrementQty of enableIncrementQty" [value]="enableIncrementQty.value">
+                {{enableIncrementQty.key}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="productInventoryForm.controls.isEnableQuantityIncrement.touched && productInventoryForm.controls.isEnableQuantityIncrement.invalid">
+              <span *ngIf="productInventoryForm.controls.isEnableQuantityIncrement.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.isEnableQuantityIncrement.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Qty Increments
+            </mat-label>
+            <input type="number" formControlName="quantityIncrement" matInput>
+            <mat-error *ngIf="productInventoryForm.controls.quantityIncrement.touched && productInventoryForm.controls.quantityIncrement.invalid">
+              <span *ngIf="productInventoryForm.controls.quantityIncrement.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.quantityIncrement.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Stock Availability
+            </mat-label>
+            <mat-select placeholder="Stock Availability" formControlName="isStockAvailibility">
+              <mat-option *ngFor="let stockAvailability of stockAvailability" [value]="stockAvailability.value">
+                {{stockAvailability.key}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="productInventoryForm.controls.isStockAvailibility.touched && productInventoryForm.controls.isStockAvailibility.invalid">
+              <span *ngIf="productInventoryForm.controls.isStockAvailibility.errors.required">This field is mandatory.</span>
+              <span *ngIf="productInventoryForm.controls.isStockAvailibility.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" />
+            <label> Use Config Settings </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Enable Multi Stock
+            </mat-label>
+            <mat-select formControlName="multiStock" (selectionChange)="addStockField($event.value)">
+              <mat-option *ngFor="let element of multiStock" [value]="element.value">
+                {{element.key}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngIf="productInventoryForm.value.multiStock == true">
+        <div formArrayName="productWarehouseForm">
+          <div *ngFor="let warehouse of productWarehouseField.controls; let i = index;">
+
+
+            <div [formGroupName]="i">
+              <div [formGroupName]="locationList[i].locationName">
+                <div class="row">
+                  <div class="form-group col-xs-12 col-sm-4">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Stock Managenemt
+                      </mat-label>
+                      <mat-select formControlName="stockManagement">
+                        <mat-option *ngFor="let stock of stockManagement" [value]="stock">
+                          {{stock.value}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h5>{{locationList[i].locationName}} *</h5>
+                  </div>
+                  <div class="col-xs-12 col-sm-4 form-group padding-remove">
+                    <div class="col-xs-12 col-sm-8">
+                      <mat-form-field appearance="outline">
+                        <mat-label>No Backborders
+                        </mat-label>
+                        <mat-select formControlName="noBackborders">
+                          <mat-option *ngFor="let backorder of backorderList" [value]="backorder.value">
+                            {{backorder.key}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <div class="checkbox-wrapper">
+                        <input type="checkbox" />
+                        <label> Use Config Settings </label>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Stock Value
+                        </mat-label>
+                        <input type="text" formControlName="stockValue" matInput>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-4">
+                    <mat-form-field class="date-control" appearance="outline">
+                      <mat-label>Expiry Date</mat-label>
+                      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validToPicker" formControlName="expiryDate" placeholder="Choose a date">
+                      <mat-datepicker-toggle matSuffix [for]="validToPicker"></mat-datepicker-toggle>
+                      <mat-datepicker #validToPicker></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xs-12 col-sm-4 form-group padding-remove">
+                    <div class="col-xs-12 col-sm-8">
+                      <mat-form-field appearance="outline">
+                        <mat-label>MPR
+                        </mat-label>
+                        <input type="text" formControlName="MRP" matInput>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Offer Price
+                        </mat-label>
+                        <input type="text" formControlName="offerPrice" matInput>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <button type="button" class="btn btn-primary" (click)="saveProductInventoryInformation()" type="submit" [disabled]="!productInventoryForm.valid">Save</button>
+      </div>
+    </form>
+  </div>
+</section>

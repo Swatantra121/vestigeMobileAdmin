@@ -1,0 +1,15 @@
+<section class="side-menu">
+  <ul *ngFor='let item of menuItems, let i=index;'>
+    <li *ngIf="!item.subItems" class={{item.class}} [ngClass]="activeItem === item.name ? 'active' : '' "><a (click)="navigateTo(item.name,item.link)">{{item.itemName}}</a></li>
+    <li *ngIf="item.subItems" class={{item.class}} [ngClass]="item.active ?'active':''">
+      <a>{{item.itemName}}
+        <span (click)="openMenuItem(i)" class="glyphicon glyphicon-chevron-up" *ngIf="item.isOpen && !item.hideArrow"></span>
+        <span (click)="openMenuItem(i)" class="glyphicon glyphicon-chevron-down" *ngIf="!item.isOpen && !item.hideArrow"></span>
+      </a>
+      <ul *ngIf="item.isOpen">
+        <li *ngFor='let subItem of item.subItems' class="icon-none" [ngClass]="activeItem === subItem.name ? 'active' : '' "><a
+            (click)="navigateTo(subItem.name,subItem.link)">{{subItem.itemName}}</a></li>
+      </ul>
+    </li>
+  </ul>
+</section>

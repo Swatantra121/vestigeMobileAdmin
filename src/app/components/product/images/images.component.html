@@ -1,0 +1,85 @@
+<section class="main-content">
+  <div class="filters-container">
+    <div class="filters-right">
+      <div class="action-control">
+        <mat-form-field appearance="outline">
+          <mat-label> Actions
+          </mat-label>
+          <mat-select #actionField>
+            <mat-option *ngFor="let action of actionList" [value]="action.value"> {{action.key}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button type="button" class="btn btn-primary" (click)="actionFunction(actionField.value)" [disabled]="this.selectedArray.length === 0">Submit</button>
+      </div>
+      <!-- <div class="form-group group-btn">
+        <button class="btn btn-primary" *ngIf="uploadArray.length > 0" type="submit" (click)="submit()" [disabled]="uploadArray.length === 0">Save</button>
+        <button class="btn btn-primary" *ngIf="uploadArray.length === 0 " type="submit" (click)="saveImageDetail()">Save</button>
+        <input style="display : none" type="file" #fileInput (change)="readURL($event)" multiple accept="image/*" />
+        <button type="button" class="btn btn-primary" (click)="fileInput.click()">Browse</button>
+      </div> -->
+    </div>
+  </div>
+  <form [formGroup]="imagesForm" role="form">
+
+    <div class="form-group group-btn text-right">
+      <button class="btn btn-primary" *ngIf="uploadArray.length > 0" type="submit" (click)="submit()">Save</button>
+      <button class="btn btn-primary" *ngIf="uploadArray.length === 0 " type="submit" (click)="saveImageDetail()">Save</button>
+      <input style="display : none" type="file" #fileInput (change)="readURL($event)" multiple accept="image/*" />
+      <button type="button" class="btn btn-default" (click)="fileInput.click()">Browse</button>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>
+              <mat-checkbox class="example-margin" (change)="selectedAll($event)"></mat-checkbox>
+            </th>
+            <th width="25%">Images (upto 10 images)</th>
+            <th width="25%">Position</th>
+            <th width="25%">Default</th>
+            <!-- <th width="25%">Upload Image</th> -->
+            <th width="25%">Action</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="productImages">
+          <tr *ngFor="let image of imagesForm.get('productImages')['controls']; let i = index;">
+            <td [formGroupName]="i">
+              <mat-checkbox class="example-margin" (change)="isChecked($event, image.value)" formControlName="checked"></mat-checkbox>
+            </td>
+            <td [formGroupName]="i">
+              <figure>
+                <img id="image" style="height: 100px;width: 100px" [src]="image.value.url || imageSrc.get(i) ? image.value.url || sanitizer.bypassSecurityTrustUrl(imageSrc.get(i)) : '' "
+                />
+              </figure>
+              <input style="display : none" type="file" #fileInput (change)="readURL($event,i)" accept="image/*" />
+              <button *ngIf="image.value.url || imageSrc.get(i)" type="button" class="btn btn-default" (click)="fileInput.click()">Browse</button>
+            </td>
+            <td [formGroupName]="i">
+              <div class="form-group half">
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label> Position
+                    </mat-label>
+                    <mat-select placeholder="position" (selectionChange)="selectPosition($event,i)" formControlName="position">
+                      <mat-option *ngFor="let position of positionList" [value]="position">
+                        {{position}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </td>
+            <td [formGroupName]="i">
+              <input type="radio" (change)="onSelectionChange(i)" formControlName="isDefault" [checked]="image.value.isDefault" />
+            </td>
+            <td [formGroupName]="i">
+              <a [class.disabled]="image.value.url || imageSrc.get(i) ? null : true" (click)="removeProductImage(image.value.name)">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</section>

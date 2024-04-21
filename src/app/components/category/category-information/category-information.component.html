@@ -1,0 +1,206 @@
+<main>
+  <section class="main-content">
+    <div class="form-container">
+      <h6>Fields marked with <span>*</span> are mandatory to filled</h6>
+      <form name="categoryInformation" [formGroup]="categoryInformationForm" role="form">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label> Category Name
+                  <sup class="error">*</sup>
+                </mat-label>
+                <input type="text" formControlName="name" matInput>
+                <mat-error *ngIf="categoryInformationForm.controls.name.touched && categoryInformationForm.controls.name.invalid">
+                  <span *ngIf="categoryInformationForm.controls.name.errors.required">This field is mandatory.</span>
+                  <span *ngIf="categoryInformationForm.controls.name.errors.pattern">This field is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field class="textarea-control" appearance="outline">
+                <mat-label> Description
+                  <sup class="error">*</sup>
+                </mat-label>
+                <textarea type="text" formControlName="description" matInput></textarea>
+
+                <mat-error *ngIf="categoryInformationForm.controls.description.touched && categoryInformationForm.controls.description.invalid">
+                  <span *ngIf="categoryInformationForm.controls.description.errors.required">This field is mandatory.</span>
+                  <span *ngIf="categoryInformationForm.controls.description.errors.pattern">This field is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+              <app-dialog-box></app-dialog-box>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <ng-container *ngIf="!imageSrc">
+                <mat-label>Image
+                  <sup class="error">*</sup>
+                </mat-label>
+              </ng-container>
+              <ng-container *ngIf="imageSrc">
+                <figure>
+                  <img style="height: 45px; width: 45px;" id="image" [src]="imageSrc" />
+                  <span (click)="removeCategoryImage()" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </figure>
+              </ng-container>
+              <input style="display: none" type="file" #fileInput formControlName="image" (change)="readURL($event)" multiple accept="image/*"
+              />
+              <button type="button" class="btn btn-default" (click)="fileInput.click()">Browse</button>
+              <!-- <input type="file" formControlName="image" placeholder="Upload file..." (change)="readURL($event)"  accept="image/*"> -->
+              <mat-error *ngIf="categoryInformationForm.controls.image.touched && categoryInformationForm.controls.image.invalid" class="error-container">
+                <span *ngIf="categoryInformationForm.controls.name.errors.required">This field is mandatory.</span>
+                <span *ngIf="categoryInformationForm.controls.image.errors.pattern" class="error-msg">This field is invalid.</span>
+              </mat-error>
+            </div>
+          </div>
+
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Include in Navigation Menu
+                  <sup class="error">*</sup>
+                </mat-label>
+                <mat-select formControlName="isIncludeInNavigation">
+                  <mat-option *ngFor="let status of statusArray" [value]="status.value">
+                    {{ status.key }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error *ngIf="categoryInformationForm.controls.isIncludeInNavigation.touched && categoryInformationForm.controls.isIncludeInNavigation.invalid"
+                class="error-container">
+                <span *ngIf="categoryInformationForm.controls.isIncludeInNavigation.errors.required" class="error-msg">This
+                  field is mandatory.</span>
+                <span *ngIf="categoryInformationForm.controls.isIncludeInNavigation.errors.pattern" class="error-msg">This
+                  field is invalid.</span>
+              </mat-error>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label> Active From </mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromPicker" formControlName="activeFrom" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="validFromPicker"></mat-datepicker-toggle>
+                <mat-datepicker #validFromPicker></mat-datepicker>
+                <mat-error *ngIf="categoryInformationForm.controls.activeFrom.touched && categoryInformationForm.controls.activeFrom.invalid"
+                  class="error-container">
+                  <span *ngIf="categoryInformationForm.controls.activeFrom.errors.required" class="error-msg">This field
+                    is mandatory.</span>
+                  <span *ngIf="categoryInformationForm.controls.activeFrom.errors.pattern" class="error-msg">This field is
+                    invalid.
+                  </span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Active To</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startPicker" formControlName="activeTo" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+                <strong *ngIf="categoryInformationForm.controls.activeTo.touched && categoryInformationForm.controls.activeTo.invalid" class="error-container">
+                  <span *ngIf="categoryInformationForm.controls.activeTo.errors.required" class="error-msg">This field is
+                    mandatory.
+                  </span>
+                  <span *ngIf="categoryInformationForm.controls.activeTo.errors.pattern" class="error-msg">This field is
+                    invalid.
+                  </span>
+                </strong>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Active For
+                  <sup class="error">*</sup>
+                </mat-label>
+                <mat-select placeholder="" formControlName="activeFor" multiple>
+                  <mat-option *ngFor="let active of activeFor" [value]="active.value">
+                    {{active.key}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <strong *ngIf="categoryInformationForm.controls.activeFor.touched && categoryInformationForm.controls.activeFor.invalid"
+                class="error-container">
+                <span *ngIf="categoryInformationForm.controls.activeFor.errors.required" class="error-msg">This field is
+                  mandatory.
+                </span>
+                <span *ngIf="categoryInformationForm.controls.activeFor.errors.pattern" class="error-msg">This field is invalid.
+                </span>
+              </strong>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Dynamic Kitting Category
+                  <sup class="error">*</sup>
+                </mat-label>
+                <mat-select placeholder="" formControlName="isDynamicKittingCategory">
+                  <mat-option *ngFor="let status of statusArray" [value]="status.value">
+                    {{status.key}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <strong *ngIf="categoryInformationForm.controls.isDynamicKittingCategory.touched && categoryInformationForm.controls.isDynamicKittingCategory.invalid"
+                class="error-container">
+                <span *ngIf="categoryInformationForm.controls.isDynamicKittingCategory.errors.required" class="error-msg">This
+                  field is mandatory.</span>
+                <span *ngIf="categoryInformationForm.controls.isDynamicKittingCategory.errors.pattern" class="error-msg">This
+                  field is invalid.</span>
+              </strong>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label> URL Key </mat-label>
+                <input type="text" formControlName="urlKey" matInput>
+                <mat-error *ngIf="categoryInformationForm.controls.urlKey.touched && categoryInformationForm.controls.urlKey.invalid">
+                  <span *ngIf="categoryInformationForm.controls.urlKey.errors.required">This field is mandatory.</span>
+                  <span *ngIf="categoryInformationForm.controls.urlKey.errors.pattern">This field is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Is Active
+                  <sup class="error">*</sup>
+                </mat-label>
+                <mat-select placeholder="" formControlName="isActive">
+                  <mat-option *ngFor="let status of statusArray" [value]="status.value">
+                    {{status.key}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <strong *ngIf="categoryInformationForm.controls.isActive.touched && categoryInformationForm.controls.isActive.invalid" class="error-container">
+                <span *ngIf="categoryInformationForm.controls.isActive.errors.required" class="error-msg">This field is mandatory.
+                </span>
+                <span *ngIf="categoryInformationForm.controls.isActive.errors.pattern" class="error-msg">This field is invalid.
+                </span>
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-right">
+          <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="!categoryInformationForm.valid">Save</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>

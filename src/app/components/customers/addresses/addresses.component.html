@@ -1,0 +1,274 @@
+<section class="main-content">
+  <div class="clearfix"></div>
+  <div class="form-container">
+
+    <div class="customer-address-carousel">
+      <owl-carousel [options]="{items: 3, dots: false, navigation: true}" [items]="addressList" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+
+        <div class="item" *ngFor="let address of addressList, let i = index;">
+          <mat-card class="address-box">
+            <p>{{ address.contactName + ' ' + address.lastName }} </p>
+            <p>{{ address.address1 }}
+              <span *ngIf="address.address1 && address.address2">, </span>{{ address.address2 }}</p>
+            <p>{{ address.cityName + ', ' + address.stateName + ', ' + address.pincode}}</p>
+            <p>{{ address.countryName }}</p>
+            <p>T:
+              <a href="tel:9266849669">{{address.contactNumber}}</a>
+            </p>
+            <div class="text-right">
+              <mat-slide-toggle [(ngModel)]="address.isDefault" (change)="isDefaultToggleChnage($event,i)">Set Default Address</mat-slide-toggle>
+            </div>
+            <ul>
+              <li>
+                <a href="javascript:void(0)">
+                  <span class="glyphicon glyphicon-trash error" (click)="addressFunction('delete' , i)" aria-hidden="true"></span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)">
+                  <span class="glyphicon glyphicon-pencil" (click)="addressFunction('edit' , i)" aria-hidden="true"></span>
+                </a>
+              </li>
+            </ul>
+          </mat-card>
+          <div class="checkbox-wrapper">
+            <mat-radio-group [(ngModel)]="address.addressType">
+              <mat-radio-button *ngFor="let type of addressTypeList" [value]="type">{{type}} Address</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+
+      </owl-carousel>
+    </div>
+    <div class="form-group  group-btn text-right">
+      <button class="btn btn-default" type="button" *ngIf="!showAddAddress" (click)="addressFunction('add')">Add New Address</button>
+      <button class="btn btn-primary" type="button" *ngIf="addressList.length !=0" (click)="saveCustomer()">Save</button>
+    </div>
+  </div>
+
+  <div class="form-container" *ngIf="showAddAddress">
+    <form name="customerAddressInfo" [formGroup]="distributorsAddress" (submit)="submit()" role="form">
+      <h5>Add New Address</h5>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="contactName" matInput>
+              <mat-error *ngIf="distributorsAddress.controls.contactName.touched && distributorsAddress.controls.contactName.invalid">
+                <span *ngIf="distributorsAddress.controls.contactName.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.contactName.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="lastName" matInput>
+              <mat-error *ngIf="distributorsAddress.controls.lastName.touched && distributorsAddress.controls.lastName.invalid">
+                <span *ngIf="distributorsAddress.controls.lastName.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.lastName.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Company
+              </mat-label>
+              <input type="text" formControlName="company" matInput>
+              <mat-error *ngIf="distributorsAddress.controls.company.touched && distributorsAddress.controls.company.invalid">
+                <span *ngIf="distributorsAddress.controls.company.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.company.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Flat/House No./Floor/Building/Locality
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="address1" matInput>
+              <mat-error *ngIf="distributorsAddress.controls.address1.touched && distributorsAddress.controls.address1.invalid">
+                <span *ngIf="distributorsAddress.controls.address1.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.address1.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Society/Street/Village/Tehsil/Post Office
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="address2" matInput>
+              <mat-error *ngIf="distributorsAddress.controls.address2.touched && distributorsAddress.controls.address2.invalid">
+                <span *ngIf="distributorsAddress.controls.address2.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.address2.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Pin Code
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="pincode" maxlength="6" matInput>
+              <mat-error *ngIf="distributorsAddress.controls.pincode.touched && distributorsAddress.controls.pincode.invalid">
+                <span *ngIf="distributorsAddress.controls.pincode.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.pincode.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Country
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="Country" readonly="true" (selectionChange)="getStateList(distributorsAddress.value.countryId)" formControlName="countryId">
+                <mat-option *ngFor="let country of countryList" [value]="country.countryId">
+                  {{country.countryName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="distributorsAddress.controls.countryId.touched && distributorsAddress.controls.countryId.invalid">
+                <span *ngIf="distributorsAddress.controls.countryId.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.countryId.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>State
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="state" (selectionChange)="getCityList(distributorsAddress.value.stateId)" formControlName="stateId">
+                <mat-option *ngFor="let state of stateList" [value]="state.stateId">
+                  {{state.stateName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="distributorsAddress.controls.stateId.touched && distributorsAddress.controls.stateId.invalid">
+                <span *ngIf="distributorsAddress.controls.stateId.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.stateId.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>District/City
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="District/City" formControlName="cityId">
+                <mat-option *ngFor="let city of cityList" [value]="city.cityId">
+                  {{city.cityName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="distributorsAddress.controls.cityId.touched && distributorsAddress.controls.cityId.invalid">
+                <span *ngIf="distributorsAddress.controls.cityId.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.cityId.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Mobile Number
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" maxlength="10" formControlName="contactNumber" matInput>
+              <mat-error *ngIf="distributorsAddress.controls.contactNumber.touched && distributorsAddress.controls.contactNumber.invalid">
+                <span *ngIf="distributorsAddress.controls.contactNumber.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.contactNumber.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>GST Number
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="gstNumber" matInput>
+              <mat-error *ngIf="distributorsAddress.controls.gstNumber.touched && distributorsAddress.controls.gstNumber.invalid">
+                <span *ngIf="distributorsAddress.controls.gstNumber.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.gstNumber.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Set Address As
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="Set Address As" formControlName="addressType">
+                  <mat-option *ngFor="let city of cityList" [value]="city.cityId">
+                      {{city.cityName}}
+                    </mat-option>
+              </mat-select>
+              <mat-error *ngIf="distributorsAddress.controls.addressType.touched && distributorsAddress.controls.addressType.invalid">
+                <span *ngIf="distributorsAddress.controls.addressType.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.addressType.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div> -->
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Set Address As
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="District/City" formControlName="addressType">
+                <mat-option *ngFor="let type of addressTypeList" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="distributorsAddress.controls.addressType.touched && distributorsAddress.controls.addressType.invalid">
+                <span *ngIf="distributorsAddress.controls.addressType.errors.required">This field is mandatory.</span>
+                <span *ngIf="distributorsAddress.controls.addressType.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="form-group group-btn text-right">
+        <button class="btn btn-default" type="cancel" (click)="addressFunction('cancel')">Cancel</button>
+        <button class="btn btn-primary" type="submit" *ngIf="editIndex !== null" [disabled]="!distributorsAddress.valid">Update Address</button>
+        <button class="btn btn-primary" type="submit" *ngIf="editIndex === null" [disabled]="!distributorsAddress.valid">Add New Address</button>
+      </div>
+    </form>
+  </div>
+</section>

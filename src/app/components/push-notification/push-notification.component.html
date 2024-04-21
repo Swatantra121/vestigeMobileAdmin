@@ -1,0 +1,77 @@
+<section class="main-content">
+  <div class="clearfix"></div>
+  <div class="form-container">
+    <h6>Fields marked with <span>*</span> are mandatory to filled</h6>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>Distributor</mat-label>
+            <mat-select formControlName="selectedDistributor">
+              <mat-option value="single">Single Distributor</mat-option>
+              <mat-option value="multiple">Multiple Distributor ID</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="form.get('selectedDistributor').value === 'single'">
+          <mat-form-field>
+            <input matInput placeholder="Enter Distributor ID" formControlName="singleDistributorId">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4" *ngIf="form.get('selectedDistributor').value === 'multiple'">
+          <input type="file" (change)="onFileSelected($event)">
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <input matInput placeholder="Enter Title ID" formControlName="title">
+          </mat-form-field>
+        </div>
+      </div>
+      
+     
+      <!-- Continue similar setup for other fields -->
+     
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field>
+              <mat-label>Image Type</mat-label>
+              <mat-select formControlName="imageType">
+                <mat-option value="url">Image URL</mat-option>
+                <mat-option value="Image">Upload Image</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4" *ngIf="form.get('imageType').value === 'url'">
+            <mat-form-field>
+              <input matInput placeholder="Enter URL" formControlName="ImgUrl">
+            </mat-form-field>
+          </div>
+          <div class="col-md-4" *ngIf="form.get('imageType').value === 'Image'">
+            <input type="file" (change)="onImageFileSelected($event)" id="fileInput">
+            <label for="fileInput">Choose File</label> <!-- Improved accessibility -->
+          </div>
+          <div class="col-md-4">
+            <mat-form-field>
+              <input matInput placeholder="Enter Message" formControlName="message">
+            </mat-form-field>
+          </div>
+         
+        </div>
+      
+      
+      <div class="row">
+        <div class="col-md-12">
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+    
+
+     
+    
+    
+    
+  </div>
+</section>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/site.js"></script>

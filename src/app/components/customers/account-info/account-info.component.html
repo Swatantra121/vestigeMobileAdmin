@@ -1,0 +1,366 @@
+<section class="main-content">
+  <div class="clearfix"></div>
+  <div class="form-container">
+    <h6>Fields marked with
+      <span>*</span> are mandatory to filled</h6>
+    <form name="addAccountInfo" [formGroup]="addAccountInfoForm" (submit)="submit()" role="form">
+      <h5>Account Information</h5>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Associate to Website
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="Associate to Website*" formControlName="associateWebsite">
+                <mat-option *ngFor="let website of associateWebsite" [value]="website.value">{{ website.value }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="addAccountInfoForm.controls.associateWebsite.touched && addAccountInfoForm.controls.associateWebsite.invalid">
+                <span *ngIf="addAccountInfoForm.controls.associateWebsite.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.associateWebsite.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field class="date-control" appearance="outline">
+                <mat-label>Created From</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="registrationDatePicker" formControlName="registrationDate" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="registrationDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #registrationDatePicker></mat-datepicker>
+                <mat-error *ngIf="addAccountInfoForm.controls.registrationDate.touched && addAccountInfoForm.controls.registrationDate.invalid" class="error-container">
+                  <span *ngIf="addAccountInfoForm.controls.registrationDate.errors.required" class="error-msg">This field is mandatory.</span>
+                  <span *ngIf="addAccountInfoForm.controls.registrationDate.errors.pattern" class="error-msg">This field is invalid.</span>
+                </mat-error>
+              </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Group
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="Group*" formControlName="group">
+                <mat-option *ngFor="let group of groupList" [value]="group">{{group}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="addAccountInfoForm.controls.group.touched && addAccountInfoForm.controls.group.invalid">
+                <span *ngIf="addAccountInfoForm.controls.group.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.group.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" />
+              <label>Disable Automatic Group Change Based on VAT ID</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Title
+              </mat-label>
+              <mat-select placeholder="Title" formControlName="title">
+                <mat-option *ngFor="let title of titleList" [value]="title">{{title}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="addAccountInfoForm.controls.title.touched && addAccountInfoForm.controls.title.invalid">
+                <span *ngIf="addAccountInfoForm.controls.title.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.title.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="firstName" maxlength="50" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.firstName.touched && addAccountInfoForm.controls.firstName.invalid">
+                <span *ngIf="addAccountInfoForm.controls.firstName.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.firstName.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="lastName" maxlength="50" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.lastName.touched && addAccountInfoForm.controls.lastName.invalid">
+                <span *ngIf="addAccountInfoForm.controls.lastName.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.lastName.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Gender
+              </mat-label>
+              <mat-select placeholder="Gender" formControlName="gender">
+                <mat-option *ngFor="let gender of genderList" [value]="gender">{{gender}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="addAccountInfoForm.controls.gender.touched && addAccountInfoForm.controls.gender.invalid">
+                <span *ngIf="addAccountInfoForm.controls.gender.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.gender.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Distributor ID
+              </mat-label>
+              <input type="number" maxlength="50" formControlName="distributorId" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.distributorId.touched && addAccountInfoForm.controls.distributorId.invalid">
+                <span *ngIf="addAccountInfoForm.controls.distributorId.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.distributorId.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Distributor Status
+              </mat-label>
+              <mat-select placeholder="Distributor Status" formControlName="status">
+                <mat-option *ngFor="let distributorStatus of distributorStatusList" [value]="distributorStatus.value">{{distributorStatus.key}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="addAccountInfoForm.controls.status.touched && addAccountInfoForm.controls.status.invalid">
+                <span *ngIf="addAccountInfoForm.controls.status.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.status.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Distributor Email
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" maxlength="50" formControlName="emailId" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.emailId.touched && addAccountInfoForm.controls.emailId.invalid">
+                <span *ngIf="addAccountInfoForm.controls.emailId.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.emailId.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text"  formControlName="mobileNumber" maxlength="14" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.mobileNumber.touched && addAccountInfoForm.controls.mobileNumber.invalid">
+                <span *ngIf="addAccountInfoForm.controls.mobileNumber.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.mobileNumber.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Email
+              </mat-label>
+              <input type="text" maxlength="50" formControlName="customerEmail" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.customerEmail.touched && addAccountInfoForm.controls.customerEmail.invalid">
+                <span *ngIf="addAccountInfoForm.controls.customerEmail.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.customerEmail.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Date of Birth
+              </mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dob" formControlName="dob" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+              <mat-datepicker #dob></mat-datepicker>
+              <mat-error *ngIf="addAccountInfoForm.controls.dob.touched && addAccountInfoForm.controls.dob.invalid">
+                <span *ngIf="addAccountInfoForm.controls.dob.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.dob.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Source
+              </mat-label>
+              <input type="text"  formControlName="source" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.source.touched && addAccountInfoForm.controls.source.invalid">
+                <span *ngIf="addAccountInfoForm.controls.source.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.source.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Device Token For Notification
+              </mat-label>
+              <input type="text" maxlength="50" formControlName="deviceToken" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.deviceToken.touched && addAccountInfoForm.controls.deviceToken.invalid">
+                <span *ngIf="addAccountInfoForm.controls.deviceToken.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.deviceToken.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>GST Number
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" maxlength="50" formControlName="gstNo" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.gstNo.touched && addAccountInfoForm.controls.gstNo.invalid">
+                <span *ngIf="addAccountInfoForm.controls.gstNo.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.gstNo.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Min. First Purchase Amount
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="minFirstPurchaseAmount" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.minFirstPurchaseAmount.touched && addAccountInfoForm.controls.minFirstPurchaseAmount.invalid">
+                <span *ngIf="addAccountInfoForm.controls.minFirstPurchaseAmount.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.minFirstPurchaseAmount.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div> 
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Pan Number
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="panNumber" matInput>
+              <mat-error *ngIf="addAccountInfoForm.controls.panNumber.touched && addAccountInfoForm.controls.panNumber.invalid">
+                <span *ngIf="addAccountInfoForm.controls.panNumber.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.panNumber.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div> 
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Distributor Parent
+              </mat-label>
+              <mat-select placeholder="Distributor Parent" formControlName="uplineDistributorId">
+                <mat-option *ngFor="let distributorParent of distributorParentList" [value]="distributorParent">{{distributorParent}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="addAccountInfoForm.controls.uplineDistributorId.touched && addAccountInfoForm.controls.uplineDistributorId.invalid">
+                <span *ngIf="addAccountInfoForm.controls.uplineDistributorId.errors.required">This field is mandatory.</span>
+                <span *ngIf="addAccountInfoForm.controls.uplineDistributorId.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Distributor Parent Email
+                    </mat-label>
+                    <input type="text" formControlName="distributorParentEmail" matInput>
+                    <mat-error *ngIf="addAccountInfoForm.controls.distributorParentEmail.touched && addAccountInfoForm.controls.distributorParentEmail.invalid">
+                      <span *ngIf="addAccountInfoForm.controls.distributorParentEmail.errors.required">This field is mandatory.</span>
+                      <span *ngIf="addAccountInfoForm.controls.distributorParentEmail.errors.pattern">This field is invalid.</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+      </div>
+
+      <div formGroupName="passwordManagement">
+        <h5>Password Management
+          <small>User can get password from our end, if they forgot their own password</small>
+        </h5>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>Admin Password
+                  <sup class="error">*</sup>
+                </mat-label>
+                <input type="password" formControlName="adminPassword" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <mat-form-field appearance="outline">
+                <mat-label>New Password
+                </mat-label>
+                <input type="password" formControlName="newPassword" matInput>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+              <label></label>
+              <div class="checkbox-wrapper">
+                <input type="checkbox" formControlName="autoGeneratePassword" />
+                <label>Send Auto-Generated Password</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <button class="btn btn-primary" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+<section class="main-content">
+  <div class="filters-container">
+    <form [formGroup]="searchForm">
+      <div class="filters-left">
+        <mat-form-field appearance="outline">
+          <mat-label> Search By</mat-label>
+          <mat-select formControlName="searchBy">
+            <mat-option *ngFor="let searchBy of searchByList" [value]="searchBy.value"> {{searchBy.key}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="search-control">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input type="text" (keyup)="searchCategoryList()" formControlName="search" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="filters-right">
+      <ul>
+        <li>
+          <label>Export Data:</label>
+        </li>
+        <li>
+          <a routerLink="/dashboard">
+            <img src="assets/images/xlsx-file-icon.svg" alt="">
+          </a>
+        </li>
+        <li>
+          <a routerLink="/dashboard">
+            <img src="assets/images/pdf-file-icon.svg" alt="">
+          </a>
+        </li>
+        <li>
+          <a routerLink="/dashboard">
+            <img src="assets/images/csv-file-icon.svg" alt="">
+          </a>
+        </li>
+      </ul>
+
+      <a (click)="createCategory()" class="btn btn-primary">Add Category</a>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="table-responsive">
+  <div class="accordian-wrapper accordian-col-11">
+    <div class="accordian-header">
+      <ul>
+        <li></li>
+        <li>ID</li>
+        <li>Category Name</li>
+        <li>B2B</li>
+        <li>B2C</li>
+        <li>App</li>
+        <li>Store</li>
+        <li>Image</li>
+        <li>Status</li>
+        <li>Published</li>
+        <li>Action</li>
+        <li></li>
+      </ul>
+    </div>
+    <div class="accordian-content">
+      <app-catelogue-accordian *ngIf="categoryList.length > 0" [catagoryCatalogue]="true" [data]="categoryList" (valueChange)='createSubCategory($event)'></app-catelogue-accordian>
+      <h6 style="text-align: center;margin-top: 10px;" *ngIf="categoryList.length === 0">No Data Found</h6>
+    </div>
+  </div>
+  </div>
+</section>

@@ -1,0 +1,6 @@
+<ol class="breadcrumb">
+  <li [ngClass]=" item.active ? 'active' : '' " *ngFor=" let item of breadcrumbItems">
+    <a *ngIf ="!item.active" routerLink="{{item.link}}">{{item.itemName}}</a>
+    <span *ngIf ="item.active">{{item.itemName}}</span>
+  </li>
+</ol>

@@ -1,0 +1,143 @@
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+    padding: 13px 8px;
+    font-size: 10px;
+    @include text-color($black,0.80);
+    vertical-align: middle;
+}
+
+.table-bordered {
+    & > thead {
+        & > tr {
+            & > th, & > td {
+                border-bottom-width: 1px;
+            }
+        }
+    }
+}
+
+.table {
+    & > thead {
+        & > tr {
+            & > th {
+                border-bottom-width: 1px;
+            }
+        }
+    }
+}
+
+.table {
+    thead {
+        /*background: $light-grey;*/
+        background: $light-blue;
+    }
+}
+
+.table {
+    td {
+        @include text-color($black,0.80);
+        h6{
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 20px;
+            margin-bottom: 2px;
+        }
+        a {
+            color: $dark-blue;
+            .glyphicon{
+                font-size: 14px;
+                &.glyphicon-trash{
+                    color: $red;
+                }
+            }
+
+            & + a{
+                float: right;
+            }
+
+            &.btn-primary{
+                color: $white;
+            }
+        }
+        li{
+            margin-bottom: 5px;
+            span{
+                display: block;
+            }
+
+            &::last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.table {
+  & > tbody {
+    & > tr {
+      &.active {
+        & > td {
+          background: $blue;
+          color: $white;
+        }
+      }
+      &.disabled {
+        & > td {
+          background: $light-grey-background;
+          color: $grey;
+        }
+      }
+    }
+  }
+}
+
+
+.horizotal-scroll{
+    max-height: 300px;
+}
+
+
+.panel-body{
+    .table{
+        margin-bottom: 0;
+        tbody{
+            td{
+                vertical-align: middle;
+                font-size: 13px;
+                span{
+                    display: block;
+
+                    &.glyphicon{
+                        font-size: 21px;
+                        color: $blue;
+                    }
+
+                    &.icon-circle{
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.table{
+    .btn{
+        @include border-radius(4px);
+        padding: 8px 12px;
+    }
+
+    .form-control{
+        height: 35px;
+    }
+
+    figure{
+        min-width: 35px;
+        min-height: 35px;
+        padding: 2px;
+        display: inline-block;
+        background: $grey;
+        text-align: center;
+        border: 1px solid $dark-grey;
+        @include border-radius(4px);
+    }
+}

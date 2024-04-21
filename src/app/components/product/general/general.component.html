@@ -1,0 +1,388 @@
+<section class="main-content">
+  <div class="form-container">
+    <h6>Fields marked with
+      <span>*</span> are mandatory to filled</h6>
+    <form name="productGeneral" [formGroup]="productGeneralForm">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Product Name
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="productName" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.productName.touched && productGeneralForm.controls.productName.invalid">
+                <span *ngIf="productGeneralForm.controls.productName.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.productName.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> SKU
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="skuCode" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.skuCode.touched && productGeneralForm.controls.skuCode.invalid">
+                <span *ngIf="productGeneralForm.controls.skuCode.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.skuCode.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Inventory Type
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="Inventory Type" formControlName="inventoryType">
+                <mat-option *ngFor="let inventory of inventoryType" [value]="inventory">
+                  {{inventory}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productGeneralForm.controls.inventoryType.touched && productGeneralForm.controls.inventoryType.invalid">
+                <span *ngIf="productGeneralForm.controls.inventoryType.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.inventoryType.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field class="textarea-control" appearance="outline">
+              <mat-label> Description
+                <sup class="error">*</sup>
+              </mat-label>
+              <textarea type="text" formControlName="description" matInput></textarea>
+              <mat-error *ngIf="productGeneralForm.controls.description.touched && productGeneralForm.controls.description.invalid">
+                <span *ngIf="productGeneralForm.controls.description.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.description.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+            <app-dialog-box></app-dialog-box>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field class="textarea-control" appearance="outline">
+              <mat-label>Short Description
+                <sup class="error">*</sup>
+              </mat-label>
+              <textarea type="text" formControlName="shortDescription" matInput></textarea>
+              <mat-error *ngIf="productGeneralForm.controls.shortDescription.touched && productGeneralForm.controls.shortDescription.invalid">
+                <span *ngIf="productGeneralForm.controls.shortDescription.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.shortDescription.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+            <app-dialog-box></app-dialog-box>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> URL Key
+              </mat-label>
+              <input type="text" formControlName="urlKey" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.urlKey.touched && productGeneralForm.controls.urlKey.invalid">
+                <span *ngIf="productGeneralForm.controls.urlKey.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.urlKey.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Is Combination Allowed
+              </mat-label>
+              <mat-select placeholder="Is Combination Allowed" formControlName="isCombinationAvailable">
+                <mat-option *ngFor="let combination of isCombinationAllowed" [value]="combination.value">
+                  {{combination.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productGeneralForm.controls.isCombinationAvailable.touched && productGeneralForm.controls.isCombinationAvailable.invalid">
+                <span *ngIf="productGeneralForm.controls.isCombinationAvailable.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.isCombinationAvailable.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field class="date-control" appearance="outline">
+              <mat-label>Set Product as New from Date</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromPicker" formControlName="validFrom" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="validFromPicker"></mat-datepicker-toggle>
+              <mat-datepicker #validFromPicker></mat-datepicker>
+              <mat-error *ngIf="productGeneralForm.controls.validFrom.touched && productGeneralForm.controls.validFrom.invalid" class="error-container">
+                <span *ngIf="productGeneralForm.controls.validFrom.errors.required" class="error-msg">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.validFrom.errors.pattern" class="error-msg">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field class="date-control" appearance="outline">
+              <mat-label>Set Product as New to Date</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validToPicker" formControlName="validTo" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="validToPicker"></mat-datepicker-toggle>
+              <mat-datepicker #validToPicker></mat-datepicker>
+              <mat-error *ngIf="productGeneralForm.controls.validTo.touched && productGeneralForm.controls.validTo.invalid" class="error-container">
+                <span *ngIf="productGeneralForm.controls.validTo.errors.required" class="error-msg">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.validTo.errors.pattern" class="error-msg">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Cash on Delivery Allowed
+              </mat-label>
+              <mat-select placeholder=" Cash on Delivery Allowed" formControlName="isCodAvailable">
+                <mat-option *ngFor="let cash of cashOnDeliveryAllowed" [value]="cash.value">
+                  {{cash.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productGeneralForm.controls.isCodAvailable.touched && productGeneralForm.controls.isCodAvailable.invalid">
+                <span *ngIf="productGeneralForm.controls.isCodAvailable.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.isCodAvailable.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Status
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder=" Status " formControlName="status">
+                <mat-option *ngFor="let status of status" [value]="status.value">
+                  {{status.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productGeneralForm.controls.status.touched && productGeneralForm.controls.status.invalid">
+                <span *ngIf="productGeneralForm.controls.status.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.status.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Visibility
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder=" Visibility " formControlName="isVisibility">
+                <mat-option *ngFor="let visibility of visibility" [value]="visibility.value">
+                  {{visibility.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productGeneralForm.controls.isVisibility.touched && productGeneralForm.controls.isVisibility.invalid">
+                <span *ngIf="productGeneralForm.controls.isVisibility.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.isVisibility.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Allow Gift Message
+              </mat-label>
+              <mat-select placeholder=" Allow Gift Message " formControlName="isAllowGiftMessage">
+                <mat-option *ngFor="let allowGiftMessage of allowGiftMessage" [value]="allowGiftMessage.value">
+                  {{allowGiftMessage.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productGeneralForm.controls.isAllowGiftMessage.touched && productGeneralForm.controls.isAllowGiftMessage.invalid">
+                <span *ngIf="productGeneralForm.controls.isAllowGiftMessage.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.isAllowGiftMessage.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Primary Vendor Code
+              </mat-label>
+              <input type="text" formControlName="primaryVendorCode" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.primaryVendorCode.touched && productGeneralForm.controls.primaryVendorCode.invalid">
+                <span *ngIf="productGeneralForm.controls.primaryVendorCode.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.primaryVendorCode.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> PV
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="number" formControlName="pv" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.pv.touched && productGeneralForm.controls.pv.invalid">
+                <span *ngIf="productGeneralForm.controls.pv.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.pv.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> BV
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="number" formControlName="bv" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.bv.touched && productGeneralForm.controls.bv.invalid">
+                <span *ngIf="productGeneralForm.controls.bv.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.bv.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Colors
+              </mat-label>
+              <input type="text" formControlName="color" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.color.touched && productGeneralForm.controls.color.invalid">
+                <span *ngIf="productGeneralForm.controls.color.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.color.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Size
+              </mat-label>
+              <input type="text" formControlName="size" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.size.touched && productGeneralForm.controls.size.invalid">
+                <span *ngIf="productGeneralForm.controls.size.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.size.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> UPC Code
+              </mat-label>
+              <input type="text" formControlName="upcCode" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.upcCode.touched && productGeneralForm.controls.upcCode.invalid">
+                <span *ngIf="productGeneralForm.controls.upcCode.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.upcCode.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Weight
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="number" formControlName="weight" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.weight.touched && productGeneralForm.controls.weight.invalid">
+                <span *ngIf="productGeneralForm.controls.weight.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.weight.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Brand
+              </mat-label>
+              <mat-select placeholder="Brand" formControlName="brand">
+                <mat-option *ngFor="let brand of brandList" [value]="brand.name">
+                  {{brand.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productGeneralForm.controls.brand.touched && productGeneralForm.controls.brand.invalid">
+                <span *ngIf="productGeneralForm.controls.brand.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.brand.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> UOM
+              </mat-label>
+              <mat-select placeholder="UOM" formControlName="uom">
+                <mat-option *ngFor="let uom of uom" [value]="uom">
+                  {{uom}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productGeneralForm.controls.uom.touched && productGeneralForm.controls.uom.invalid">
+                <span *ngIf="productGeneralForm.controls.uom.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.uom.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Width
+              </mat-label>
+              <input type="number" formControlName="width" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.width.touched && productGeneralForm.controls.width.invalid">
+                <span *ngIf="productGeneralForm.controls.width.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.width.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Height
+              </mat-label>
+              <input type="number" formControlName="height" matInput>
+              <mat-error *ngIf="productGeneralForm.controls.height.touched && productGeneralForm.controls.height.invalid">
+                <span *ngIf="productGeneralForm.controls.height.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.height.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label> Dynamic Knitting
+              </mat-label>
+              <mat-select placeholder=" Allow Gift Message " formControlName="isDynamicKitting">
+                <mat-option *ngFor="let dynamicKitting of dynamicKitting" [value]="dynamicKitting.value">
+                  {{dynamicKitting.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="productGeneralForm.controls.isDynamicKitting.touched && productGeneralForm.controls.isDynamicKitting.invalid">
+                <span *ngIf="productGeneralForm.controls.isDynamicKitting.errors.required">This field is mandatory.</span>
+                <span *ngIf="productGeneralForm.controls.isDynamicKitting.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <button class="btn btn-primary" type="button" (click)="submit()" [disabled]="!productGeneralForm.valid">Save</button>
+      </div>
+    </form>
+  </div>
+</section>

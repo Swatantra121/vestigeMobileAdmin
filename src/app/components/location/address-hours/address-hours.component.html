@@ -1,0 +1,183 @@
+<section class="main-content">
+  <form name="locationAddressHours" [formGroup]="locationAddressHoursForm" (submit)="submit()" role="form">
+    <div class="form-container">
+      <h6>Fields marked with
+        <span>*</span> are mandatory to filled</h6>
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Flat/House No./Floor/Building/Locality
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="houseNo" matInput>
+              <mat-error *ngIf="locationAddressHoursForm.controls.houseNo.touched && locationAddressHoursForm.controls.houseNo.invalid">
+                <span *ngIf="locationAddressHoursForm.controls.houseNo.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationAddressHoursForm.controls.houseNo.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Society/Street/Village/Tehsil/Post Office
+
+              </mat-label>
+              <input type="text" formControlName="society" matInput>
+              <mat-error *ngIf="locationAddressHoursForm.controls.society.touched && locationAddressHoursForm.controls.society.invalid">
+                <span *ngIf="locationAddressHoursForm.controls.society.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationAddressHoursForm.controls.society.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Pincode
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" maxlength="6" formControlName="pincode" matInput>
+              <mat-error *ngIf="locationAddressHoursForm.controls.pincode.touched && locationAddressHoursForm.controls.pincode.invalid">
+                <span *ngIf="locationAddressHoursForm.controls.pincode.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationAddressHoursForm.controls.pincode.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Country
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="Country" (selectionChange)="getStateList(locationAddressHoursForm.value.country)" formControlName="country">
+                <mat-option *ngFor="let country of countryList" [value]="country.countryId">
+                  {{country.countryName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationAddressHoursForm.controls.country.touched && locationAddressHoursForm.controls.country.invalid">
+                <span *ngIf="locationAddressHoursForm.controls.country.errors.required">This field is mandatory.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>State
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="State" (selectionChange)="getCityList(locationAddressHoursForm.value.state)" formControlName="state">
+                <mat-option *ngFor="let state of stateList" [value]="state.stateId">
+                  {{state.stateName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationAddressHoursForm.controls.state.touched && locationAddressHoursForm.controls.state.invalid">
+                <span *ngIf="locationAddressHoursForm.controls.state.errors.required">This field is mandatory.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>District/City
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="District/City" formControlName="city">
+                <mat-option *ngFor="let city of cityList" [value]="city.cityId">
+                  {{city.cityName}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationAddressHoursForm.controls.city.touched && locationAddressHoursForm.controls.city.invalid">
+                <span *ngIf="locationAddressHoursForm.controls.city.errors.required">This field is mandatory.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Phone
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="phoneNumber" maxlength="10" matInput>
+              <mat-error *ngIf="locationAddressHoursForm.controls.phoneNumber.touched && locationAddressHoursForm.controls.phoneNumber.invalid">
+                <span *ngIf="locationAddressHoursForm.controls.phoneNumber.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationAddressHoursForm.controls.phoneNumber.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Email
+              </mat-label>
+              <input type="text" formControlName="email" matInput>
+              <mat-error *ngIf="locationAddressHoursForm.controls.email.touched && locationAddressHoursForm.controls.email.invalid">
+                <span *ngIf="locationAddressHoursForm.controls.email.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationAddressHoursForm.controls.email.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="form-container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" formArrayName="days" *ngFor="let dayFormGroup of locationAddressHoursForm.controls.days['controls']; let i = index;">
+          <div [formGroupName]="i">
+            <mat-checkbox class="example-margin" formControlName="IsActive" (change)="onCheckBoxChange($event,dayFormGroup,weekDayName[i].value)"></mat-checkbox>
+            <label>{{weekDayName[i].key}}</label>
+            <div class="clearfix"></div>
+            <div [formGroupName]="weekDayName[i].value">
+              <div class="form-group half">
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Hours From
+                      <sup class="error">*</sup>
+                    </mat-label>
+                    <mat-select placeholder="Hours From" formControlName="hoursFrom">
+                      <mat-option *ngFor="let hour of hoursFrom" [value]="hour.value">
+                        {{hour.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-group half">
+                <div class="form-group">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Hours To
+                      <sup class="error">*</sup>
+                    </mat-label>
+                    <mat-select placeholder="Hours To" formControlName="hoursTo">
+                      <mat-option *ngFor="let hour of hoursFrom" [value]="hour.value">
+                        {{hour.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <div class="group-btn">
+          <button class="btn btn-primary" [disabled]="!locationAddressHoursForm.valid" type="submit">Save</button>
+          <!-- <button type="button" class="btn btn-primary" [disabled]="!isPublish">Publish</button> -->
+        </div>
+      </div>
+    </div>
+
+
+  </form>
+</section>

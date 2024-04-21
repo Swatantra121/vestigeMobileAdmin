@@ -1,0 +1,179 @@
+<section class="main-content">
+  <div class="form-container">
+    <h6>Fields marked with <span>*</span> are mandatory to filled</h6>
+    <form name="locationInfo" [formGroup]="locationInfoForm" (submit)="submit()" role="form">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Name
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="locationName" matInput>
+              <mat-error *ngIf="locationInfoForm.controls.locationName.touched && locationInfoForm.controls.locationName.invalid">
+                <span *ngIf="locationInfoForm.controls.locationName.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.locationName.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Location Code (Internal Use)
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="text" formControlName="locationCode" matInput>
+              <mat-error *ngIf="locationInfoForm.controls.locationCode.touched && locationInfoForm.controls.locationCode.invalid">
+                <span *ngIf="locationInfoForm.controls.locationCode.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.locationCode.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Order Of Display
+                <sup class="error">*</sup>
+              </mat-label>
+              <input type="number" formControlName="orderOfDisplay" matInput>
+              <mat-error *ngIf="locationInfoForm.controls.orderOfDisplay.touched && locationInfoForm.controls.orderOfDisplay.invalid">
+                <span *ngIf="locationInfoForm.controls.orderOfDisplay.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.orderOfDisplay.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Warehouse enable
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="Warehouse enable *" formControlName="isWarehouseEnabled">
+                <mat-option *ngFor="let status of statusArray" [value]="status.value">
+                  {{status.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationInfoForm.controls.isWarehouseEnabled.touched && locationInfoForm.controls.isWarehouseEnabled.invalid">
+                <span *ngIf="locationInfoForm.controls.isWarehouseEnabled.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.isWarehouseEnabled.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Fulfilment type
+              </mat-label>
+              <mat-select placeholder="Fulfilment type" formControlName="fulfillmentType">
+                <mat-option *ngFor="let type of fulfillmentType" [value]="type.value">
+                  {{type.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationInfoForm.controls.fulfillmentType.touched && locationInfoForm.controls.fulfillmentType.invalid">
+                <span *ngIf="locationInfoForm.controls.fulfillmentType.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.fulfillmentType.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Available in checkout
+              </mat-label>
+              <mat-select placeholder="Available in checkout" formControlName="availableInCheckout">
+                <mat-option *ngFor="let status of statusArray" [value]="status.value">
+                  {{status.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationInfoForm.controls.availableInCheckout.touched && locationInfoForm.controls.availableInCheckout.invalid">
+                <span *ngIf="locationInfoForm.controls.availableInCheckout.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.availableInCheckout.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Store View Selection
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select formControlName="storeViewSelection">
+                <mat-option *ngFor="let store of storeViewSelection" [value]="store.value">
+                  {{store.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationInfoForm.controls.storeViewSelection.touched && locationInfoForm.controls.storeViewSelection.invalid">
+                <span *ngIf="locationInfoForm.controls.storeViewSelection.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.storeViewSelection.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Customer Group Selection
+                <sup class="error">*</sup>
+              </mat-label>
+              <mat-select placeholder="Customer Group Selection *" formControlName="customerGroupSelection" multiple>
+                <mat-option *ngFor="let customer of customerGroupSelection" [value]="customer.value">
+                  {{customer.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationInfoForm.controls.customerGroupSelection.touched && locationInfoForm.controls.customerGroupSelection.invalid">
+                <span *ngIf="locationInfoForm.controls.customerGroupSelection.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.customerGroupSelection.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Visible in store locator on CMS page
+              </mat-label>
+              <mat-select placeholder="Visible in store locator on CMS page" formControlName="isVisibleOnCmsPage">
+                <mat-option *ngFor="let status of statusArray" [value]="status.value">
+                  {{status.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationInfoForm.controls.isVisibleOnCmsPage.touched && locationInfoForm.controls.isVisibleOnCmsPage.invalid">
+                <span *ngIf="locationInfoForm.controls.isVisibleOnCmsPage.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.isVisibleOnCmsPage.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Visible in stock grid on product page
+              </mat-label>
+              <mat-select placeholder="Visible in stock grid on product page" formControlName="isVisibleOnProductPage">
+                <mat-option *ngFor="let status of statusArray" [value]="status.value">
+                  {{status.key}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="locationInfoForm.controls.isVisibleOnProductPage.touched && locationInfoForm.controls.isVisibleOnProductPage.invalid">
+                <span *ngIf="locationInfoForm.controls.isVisibleOnProductPage.errors.required">This field is mandatory.</span>
+                <span *ngIf="locationInfoForm.controls.isVisibleOnProductPage.errors.pattern">This field is invalid.</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="form-group text-right">
+        <div class="group-btn">
+          <button class="btn btn-primary" type="submit" [disabled]="!locationInfoForm.valid">Save</button>
+          <!-- <button type="button" class="btn btn-primary" [disabled]="!isPublish">Publish</button> -->
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

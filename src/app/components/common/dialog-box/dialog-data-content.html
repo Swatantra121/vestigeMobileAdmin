@@ -1,0 +1,7 @@
+<div mat-dialog-content>
+  <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Cancel</button>
+  <button mat-button (click)="onNoClick()">Save</button>
+</div>

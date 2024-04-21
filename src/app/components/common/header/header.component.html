@@ -1,0 +1,32 @@
+<header>
+  <a routerLink="/dashboard" class="brand">
+      <img src="assets/images/logo.png" alt="" />
+  </a>
+  <nav>
+      <ul>
+          <li>
+            <a class="profile-image">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </a>
+          </li>
+            <li>
+                <a href="javascript:void(0)" [matMenuTriggerFor]="menu" class="user-dropdown">
+                  <h6>{{userData?.name}}<small>Backend Developer</small></h6>
+                </a>
+                <ul class="user-profile-list">
+                    <li><a routerLink="/dashboard">User Profile</a></li>
+                    <li><a routerLink="/dashboard">Log Out</a></li>
+                </ul>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <span>User Profile</span>
+                </button>
+                <button mat-menu-item (click)="logout()">
+                  <span>Log Out</span>
+                </button>
+              </mat-menu>
+            </li>
+            <li><a routerLink="/dashboard"><img src="assets/images/notification.svg" alt=""></a></li>
+        </ul>
+  </nav>
+</header>

@@ -1,0 +1,41 @@
+<section class="main-content">
+  <div class="filters-container">
+    <form [formGroup]="searchForm">
+      <div class="filters-left">
+        <mat-form-field appearance="outline">
+          <mat-label> Search By</mat-label>
+          <mat-select formControlName="searchBy">
+            <mat-option *ngFor="let searchBy of searchByList" [value]="searchBy.value"> {{searchBy.key}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="search-control">
+          <mat-form-field appearance="outline">
+            <mat-label>Search</mat-label>
+            <input type="text" (keyup)="searchCategoryList()" formControlName="search" matInput>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="clearfix"></div>
+  <div class="accordian-wrapper">
+    <div class="accordian-header">
+      <ul>
+        <li></li>
+        <li>ID</li>
+        <li>Category Name</li>
+        <li>Thumbnail Image</li>
+        <li>Select</li>
+      </ul>
+    </div>
+    <div class="accordian-content">
+      <div class="accordian-content">
+        <app-catelogue-accordian *ngIf="categoryList.length > 0 && productCatagory" [data]="categoryList" [productCategory]="true"></app-catelogue-accordian>
+      </div>
+    </div>
+  </div>
+  <div class="form-group text-right">
+    <button class="btn btn-primary" type="submit" (click)="submit()" [disabled]="productService.productCategories.length > 0 ? false : true">Save</button>
+  </div>
+</section>

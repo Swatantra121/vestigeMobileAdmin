@@ -1,0 +1,61 @@
+<section class="main-content">
+  <div class="form-container">
+    <h6>Fields marked with <span>*</span> are mandatory to filled</h6>
+    <form name="locationInventory" [formGroup]="locationInventoryForm" (submit)="submit()" role="form">
+      <div class="row">
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Stock Management
+            </mat-label>
+            <mat-select placeholder="" formControlName="stockManagement">
+              <mat-option *ngFor="let stockManagement of stockManagementList" [value]="stockManagement.value">
+                {{stockManagement.key}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="locationInventoryForm.controls.stockManagement.touched && locationInventoryForm.controls.stockManagement.invalid">
+              <span *ngIf="locationInventoryForm.controls.stockManagement.errors.required">This field is mandatory.</span>
+              <span *ngIf="locationInventoryForm.controls.stockManagement.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Use Config setting for backorders
+            </mat-label>
+            <mat-select placeholder="" formControlName="isConfigSettingForBackOrder">
+              <mat-option *ngFor="let configSetting of configSettingList" [value]="configSetting.value">
+                {{configSetting.key}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="locationInventoryForm.controls.isConfigSettingForBackOrder.touched && locationInventoryForm.controls.isConfigSettingForBackOrder.invalid">
+              <span *ngIf="locationInventoryForm.controls.isConfigSettingForBackOrder.errors.required">This field is mandatory.</span>
+              <span *ngIf="locationInventoryForm.controls.isConfigSettingForBackOrder.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4">
+          <mat-form-field appearance="outline">
+            <mat-label> Backorders Status
+            </mat-label>
+            <mat-select placeholder="" formControlName="backOrderStatus">
+              <mat-option *ngFor="let backOrder of backOrderList" [value]="backOrder.value">
+                {{backOrder.key}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="locationInventoryForm.controls.backOrderStatus.touched && locationInventoryForm.controls.backOrderStatus.invalid">
+              <span *ngIf="locationInventoryForm.controls.backOrderStatus.errors.required">This field is mandatory.</span>
+              <span *ngIf="locationInventoryForm.controls.backOrderStatus.errors.pattern">This field is invalid.</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-group text-right">
+          <div class="group-btn">
+            <button type="button" class="btn btn-primary" type="submit" [disabled]="!locationInventoryForm.valid">Save</button>
+            <!-- <button type="button" class="btn btn-primary" (click)="publish()" [disabled]="!isPublish">Publish</button> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
