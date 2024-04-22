@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams, HttpEvent } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LocalStorageService } from './local-Storage';
@@ -29,7 +29,7 @@ export class ApiService {
     if (authToken) {
       httpRequest = {
         headers: new HttpHeaders({
-          'Accept': 'application/json',
+           'Accept':'application/json, text/plain, */*',
           'Content-Type': 'application/json',
           'Authorization': `bearer ${authToken}`,
           // 'distributorId': distributorId
@@ -99,5 +99,14 @@ export class ApiService {
     return this.http.post(path, uploadData, config)
       .pipe(catchError(this.formatErrors));
   }
+  // uploadFile(file: File): Observable<HttpEvent<any>> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('file', file, file.name);
+
+  //   const headers = new HttpHeaders({
+  //     'Authorization': 'bearer your-token',
+  //     'Accept': 'application/json, text/plain, */*'
+  //     // Content-Type is not explicitly set because the browser will set it along with the correct boundary
+  //   });
 
 }

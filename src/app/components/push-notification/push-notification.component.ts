@@ -17,6 +17,8 @@ import {PusNotificationService} from 'src/app/services/pus-notification.service'
 export class PushNotificationComponent implements OnInit {
   form: FormGroup;
   imageUrl: string; // Manage URL separately if not part of form submission
+  Imgurl : any ;
+  private selectedFile: File;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
@@ -32,12 +34,12 @@ export class PushNotificationComponent implements OnInit {
       selectedDistributor: ['single', Validators.required],
       singleDistributorId: [''],
       title: ['', Validators.required],
-      CSVFile: [null], // for handling file uploads
-      imageType: ['', Validators.required],
+      multiple: [null], // for handling file uploads
+      imageType: ['Image', Validators.required],
       ImgUrl: [''],
       message: ['', Validators.required]
     });
-
+      
     // Conditionally enable or disable singleDistributorId based on selectedDistributor
     this.form.get('selectedDistributor').valueChanges.subscribe(value => {
       if (value === 'single') {
@@ -58,60 +60,109 @@ export class PushNotificationComponent implements OnInit {
       }
     });
   }
-
+  distributeridarray : any 
+  validateDist(data){
+    debugger
+    const formData = this.form.value;
+    const distributerid = data.target['value'];
+    this.distributeridarray = [];
+    if(distributerid.length == 8){
+      this.distributeridarray.push(formData.singleDistributorId);
+      //check distributer
+      this.PusNotificationService.checkDistributer(this.distributeridarray).subscribe(result => {
+        this.loaderService.isLoading(false);
+        if(result.length == 1){ 
+          if(result[0].isValid == false){
+            this.alertService.error('Disributer id not Registered.');
+            return false;
+          }else{
+            this.alertService.success(null, 'Distributer Validated');
+          }
+        }
+      }, error => {
+        this.alertService.error(null);
+        this.loaderService.isLoading(false);
+      });
+    }
+    this.alertService.error('Please enter valid distributer.')
+    this.loaderService.isLoading(false);
+  }
   onFileSelected(event: any): void {
     debugger
     const file = event.target.files[0];
-    if (file) {
-      this.form.patchValue({ CSVFile: file });
-      this.form.get('CSVFile').updateValueAndValidity();
+    if (file && file.type === 'text/csv') {
+      this.form.get('multiple').setValue(file); // Update form control
+    } else {
+      alert('Please select a valid CSV file.');
     }
     
   }
+  onFileSelectedImg(event: any): void {
+    debugger
+    this.selectedFile = event.target.files[0];
+    this.upload()
+  }
+  upload(): void {
+    debugger
+    if (this.selectedFile) {
+      // Prepare the form data
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+      formData.append('filetype', 'IMAGE');
 
-  onImageFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.imageUrl = reader.result as string; // For displaying the image
-      };
-      reader.readAsDataURL(file);
+      this.PusNotificationService.imageUpload(formData).subscribe(event => {
+        console.log(event); // Handle the progress and response here
+        let imgUrl  :any  = event;
+         this.Imgurl =   imgUrl.fileUploadUri
+      
+      }, error => {
+        console.error('Upload error:', error);
+      });
     }
   }
 
+
   onSubmit() {
     // 'debugger' keyword pauses the execution in developer tools; ensure to remove it in production
+    this.loaderService.isLoading(true);
     debugger;
     if (this.form.valid) {
       // Assuming 'form' is a FormGroup and matches the keys used in the API
+      
       const formData = this.form.value;
-      let data = {
+      if(formData.selectedDistributor=='multiple'){
+
+      }
+      let formDataSingle = {
         "distributer_type": formData.distributerType || "single", // Using form data or default values
-        "distributerid": formData.distributerId,
+        "distributerid": formData.singleDistributorId,
         "title": formData.title,
         "screen": formData.screen || null, // Providing defaults if necessary
-        "imageURL": formData.imageUrl || "",
+        "imageURL": this.Imgurl || "",
         "imageURLText": formData.imageUrlText || null,
         "screenTitle": formData.screenTitle || null,
         "categoryId": formData.categoryId || null,
         "image_upload": formData.imageUpload || null,
         "skuCode": formData.skuCode || null,
         "message": formData.message,
-        "sendToUsers": [formData.distributerId] // Assuming distributerId is used here
+        "sendToUsers": [formData.singleDistributorId] // Assuming distributerId is used here
       };
       debugger
-      this.PusNotificationService.pushNotificationAPI(data).subscribe(
+      this.PusNotificationService.pushNotificationAPI(formDataSingle).subscribe(
         data => {
-          console.log('Notification sent successfully:', data);
+          console.log('Notification sent successfully:', data[0].pushNotificationStatus);
           this.form.reset(); // Reset the form after successful submission
           // Optional: Provide user feedback
-          alert('Notification sent successfully!');
+          // alert(data[0].pushNotificationStatus);
+          this.alertService.error(data[0].pushNotificationStatus);
+          this.loaderService.isLoading(false);
         },
         error => {
           console.error('Error sending notification:', error);
           // Optional: Provide user feedback
-          alert('Failed to send notification. Please try again.');
+          // alert('Failed to send notification. Please try again.');
+          this.alertService.error('Error sending notification:', error);
+          this.loaderService.isLoading(false);
         }
       );
     } else {

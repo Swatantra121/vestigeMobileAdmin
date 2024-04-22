@@ -6,19 +6,42 @@ import * as Urls from 'src/app/utility/Urls';
 import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageService } from 'src/app/services/local-Storage';
 import * as myGlobals from 'src/app/globals';
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class PusNotificationService {
 
   constructor(private apiService: ApiService,
     private localStorage: LocalStorageService,
-    private router: Router) { }
+    private http: HttpClient)
+     { }
     pushNotificationAPI(data) {
       debugger
        console.log(data);
       return this.apiService.post(Urls.ServiceEnum.pushNotification, data);
       // return this.apiService.post('http://13.232.167.44:8080/auth/training-login', credentials)
     }
+
+    
+    imageUpload(data) {
+      debugger
+       console.log(data);
+      // return this.apiService.post(Urls.ServiceEnum.imageUploadurl, data);
+      // return this.apiService.post(Urls.ServiceEnum.imageUploadurl, data);
+     return  this.http.post(Urls.ServiceEnum.imageUploadurl, data)
+      
+    
+      // return this.apiService.post('http://13.232.167.44:8080/auth/training-login', credentials)
+    }
+
+    checkDistributer(formdata){
+      return this.apiService.post(Urls.ServiceEnum.checkDistId, formdata);
+    }
+   
+  
+      
+   
 }
 

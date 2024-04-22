@@ -28,10 +28,14 @@ const API_PREFIX = {
       OTP: (''),
       Wishlist: (''),
       Normal: (''),
-      pushNotification:('')
+      pushNotification:(''),
+      imageUploadurl: (''),
+      checkDistId: ('')
   };
 
   export const ServiceEnum = {
+    checkDistId:(environment.API_URLS_ENDPOINT + API_PREFIX.checkDistId + 'notification/api/v1/push-notifications/valid/distributorId'/*:ServiceType*/),
+    imageUploadurl: (environment.API_URLS_ENDPOINT + API_PREFIX.imageUploadurl + 'common/api/v1/file-upload'/*:ServiceType*/),
     pushNotification: (environment.API_URLS_ENDPOINT + API_PREFIX.pushNotification + 'notification/api/v1/notification/push'/*:ServiceType*/),
     Otp: (environment.API_URLS_ENDPOINT + API_PREFIX.OTP + 'uaa-0.0.1-SNAPSHOT/api/v1/send/otp/'/*:ServiceType*/),
     Login: (environment.API_URLS_ENDPOINT + API_PREFIX.Normal + 'auth/training-login'/*:ServiceType*/),
