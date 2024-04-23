@@ -23,6 +23,13 @@ export class PusNotificationService {
       return this.apiService.post(Urls.ServiceEnum.pushNotification, data);
       // return this.apiService.post('http://13.232.167.44:8080/auth/training-login', credentials)
     }
+   
+      notificationRequest(request,file){  
+        debugger
+        const url = Urls.ServiceEnum.multiDist+`?message=${request.message}&title=${request.title}&imageURL=${request.imageURL}&screen=${request.screen}&screenTitle=${request.screenTitle}&skuCode=${request.skuCode}&categoryId=${request.categoryId}`;
+        return this.apiService.uploadFile(url, file, "CSV");
+      }
+    
 
     
     imageUpload(data) {

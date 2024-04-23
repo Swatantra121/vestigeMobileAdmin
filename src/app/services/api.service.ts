@@ -88,16 +88,19 @@ export class ApiService {
       .pipe(catchError(this.formatErrors));
   }
 
-  uploadFile(path: string, files) {
+  uploadFile(path: string, files, type) {
     const uploadData = new FormData();
-    uploadData.append('files', files, files.name);
+    uploadData.append("file", files, files.name);
+    uploadData.append("filetype", type);
     const config = {
       headers: new HttpHeaders({
-        'Authorization': `bearer ${this.localStorage.get(myGlobals.STORAGE_KEYS.TOKEN_KEY)}`,
-      })
+        Authorization: `bearer ${this.localStorage.get(
+          myGlobals.STORAGE_KEYS.TOKEN_KEY
+        )}`,
+         
+      }),
     };
-    return this.http.post(path, uploadData, config)
-      .pipe(catchError(this.formatErrors));
+    return this.http.post(path, uploadData, config).pipe(catchError(this.formatErrors));
   }
   // uploadFile(file: File): Observable<HttpEvent<any>> {
   //   const formData: FormData = new FormData();

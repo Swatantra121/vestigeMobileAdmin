@@ -15,7 +15,8 @@
         </div> 
         <div class="col-md-4" *ngIf="form.get('selectedDistributor').value === 'single'">
           <mat-form-field>
-            <input matInput placeholder="Enter Distributor ID"  (keydown.enter)="validateDist($event)" formControlName="singleDistributorId">
+            <input matInput placeholder="Enter Distributor ID"  (keydown.enter)="validateDist($event)" formControlName="singleDistributorId"
+            maxlength="10">
           </mat-form-field>
         </div>
         <div class="col-md-4" *ngIf="form.get('selectedDistributor').value === 'multiple'">
@@ -23,7 +24,7 @@
         </div>
         <div class="col-md-4">
           <mat-form-field>
-            <input matInput placeholder="Enter Title ID" formControlName="title">
+            <input matInput placeholder="Enter Title" formControlName="title">
           </mat-form-field>
         </div>
       </div>
@@ -52,7 +53,7 @@
           </div>
           <div class="col-md-4">
             <mat-form-field>
-              <input matInput placeholder="Enter Message" formControlName="message">
+              <input matInput placeholder="Enter Message" formControlName="message" >
             </mat-form-field>
           </div>
          

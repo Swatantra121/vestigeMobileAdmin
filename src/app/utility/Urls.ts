@@ -30,10 +30,12 @@ const API_PREFIX = {
       Normal: (''),
       pushNotification:(''),
       imageUploadurl: (''),
-      checkDistId: ('')
+      checkDistId: (''),
+      multiDist:('')
   };
 
   export const ServiceEnum = {
+    multiDist: (environment.API_URLS_ENDPOINT + API_PREFIX.multiDist + 'notification/api/v1/notification/push/allAtOnce'/*:ServiceType*/),
     checkDistId:(environment.API_URLS_ENDPOINT + API_PREFIX.checkDistId + 'notification/api/v1/push-notifications/valid/distributorId'/*:ServiceType*/),
     imageUploadurl: (environment.API_URLS_ENDPOINT + API_PREFIX.imageUploadurl + 'common/api/v1/file-upload'/*:ServiceType*/),
     pushNotification: (environment.API_URLS_ENDPOINT + API_PREFIX.pushNotification + 'notification/api/v1/notification/push'/*:ServiceType*/),
