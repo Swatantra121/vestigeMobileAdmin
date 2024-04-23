@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn} from 
 import { AuthService } from 'src/app/services/auth.service';
 // import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
-import { LocalStorageService } from 'src/app/services/local-Storage';
+// import { LocalStorageService } from 'src/app/services/local-Storage';
 // import * as myGlobals from 'src/app/globals';
 import { SUPPORTED_FILES_EXTS, PRODUCT_MAX_IMAGE, PRODUCT_IMAGE_FILE_SIZE } from 'src/app/utility/Constant';
 import { LoaderService } from 'src/app/services/loader.service';
@@ -33,7 +33,7 @@ export class PushNotificationComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     // private router: Router,
-    private localStorage: LocalStorageService,
+    // private localStorage: LocalStorageService,
     public alertService: AlertService,
     private PusNotificationService: PusNotificationService,
     private loaderService: LoaderService
@@ -110,6 +110,7 @@ export class PushNotificationComponent implements OnInit {
     if(filenames[filenames.length-1]!=="csv")
     {
       this.alertService.error( null, 'Please Select CSV File.');
+      this.form.get('selectedDistributor').reset()
        this.loaderService.isLoading(false);
     return
     }
@@ -240,10 +241,10 @@ export class PushNotificationComponent implements OnInit {
             this.loaderService.isLoading(false);
           },
           error => {
-            console.error('Error sending notification:', error);
+            // console.error('Error sending notification:', error);
             // Optional: Provide user feedback
             // alert('Failed to send notification. Please try again.');
-            this.alertService.error('Error sending notification:', error);
+            this.alertService.error(error, 'Error sending notification:');
             this.loaderService.isLoading(false);
           }
         ); 
@@ -252,7 +253,8 @@ export class PushNotificationComponent implements OnInit {
     } else {
       // Optional: Provide user feedback for invalid form
       // alert('Please fill out the form correctly.');
-      this.alertService.error('Please fill out the form correctly.');
+      this.alertService.error( null, 'Please fill out the form correctly.');
+      this.loaderService.isLoading(false);
     }
   }
   
