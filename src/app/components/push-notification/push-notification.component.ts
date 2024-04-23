@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit ,ViewChild} from '@angular/core';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn} from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 // import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert.service';
@@ -9,6 +9,7 @@ import { SUPPORTED_FILES_EXTS, PRODUCT_MAX_IMAGE, PRODUCT_IMAGE_FILE_SIZE } from
 import { LoaderService } from 'src/app/services/loader.service';
 import {PusNotificationService} from 'src/app/services/pus-notification.service'
 // import {  } from '@angular/forms';
+// import { AbstractControl, ValidatorFn } from '@angular/forms';
 import * as myGlobals from 'src/app/globals';
 import * as XLSX from 'xlsx';  
 import * as FileSaver from 'file-saver';
@@ -18,6 +19,7 @@ import * as FileSaver from 'file-saver';
   templateUrl: './push-notification.component.html',
   styleUrls: ['./push-notification.component.css']
 })
+
 export class PushNotificationComponent implements OnInit {
   form: FormGroup;
   imageUrl: string; // Manage URL separately if not part of form submission
@@ -36,6 +38,7 @@ export class PushNotificationComponent implements OnInit {
     private PusNotificationService: PusNotificationService,
     private loaderService: LoaderService
   ) {}
+  
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -106,7 +109,9 @@ export class PushNotificationComponent implements OnInit {
     let filenames=this.uploadedFiles.name.split('.');
     if(filenames[filenames.length-1]!=="csv")
     {
-    console.log("not csv")
+      this.alertService.error( null, 'Please Select CSV File.');
+       this.loaderService.isLoading(false);
+    return
     }
     console.log(this.uploadedFiles)
     const reader: FileReader = new FileReader();
@@ -143,6 +148,8 @@ export class PushNotificationComponent implements OnInit {
 
   onImageFileSelected(event: any): void {
     debugger
+    // event.target.files[0]=""
+    
     this.selectedFile = event.target.files[0];
     this.upload()
   }
@@ -167,21 +174,8 @@ export class PushNotificationComponent implements OnInit {
 
 
   onSubmit() {
-    // 'debugger' keyword pauses the execution in developer tools; ensure to remove it in production
-  
     const formData = this.form.value;
-    // if(formData.singleDistributorId =="" || formData.singleDistributorId==null){
-    //   this.alertService.error('Error sending notification:');
-    //   return
-    // }
-    // if(formData.title =="" || formData.title==null){
-    //   this.alertService.error("Please enter Title");
-    //   return
-    // }
-    // if(formData.message =="" || formData.message==null){
-    //   this.alertService.error("Please enter Message ");
-    //   return
-    // }
+   
     this.loaderService.isLoading(true);
 
     // this.upload()
@@ -192,6 +186,8 @@ export class PushNotificationComponent implements OnInit {
     
      
       if(formData.selectedDistributor=='multiple'){
+        
+
         let notificationMultipleData= {
           "categoryId": formData.categoryId || null,
           "distributer_type": formData.distributerType ,
@@ -235,11 +231,12 @@ export class PushNotificationComponent implements OnInit {
         debugger
         this.PusNotificationService.pushNotificationAPI(formDataSingle).subscribe(
           data => {
-            console.log('Notification sent successfully:', data[0].pushNotificationStatus);
-            this.form.reset(); // Reset the form after successful submission
-            // Optional: Provide user feedback
-            // alert(data[0].pushNotificationStatus);
-            this.alertService.error(data[0].pushNotificationStatus);
+            this.alertService.success(null, 'Notification Added Successfully.');
+            // this.form.reset(); // Reset the form after successful submission
+            this.form.get('singleDistributorId').reset();
+            this.form.get('title').reset();
+            this.form.get('message').reset();
+            this.form.get('imageType').reset()
             this.loaderService.isLoading(false);
           },
           error => {
