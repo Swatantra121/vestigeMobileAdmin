@@ -29,6 +29,7 @@ export class PushNotificationComponent implements OnInit {
   worksheet: any;  
   storeData: any;
   uploadedFiles: any;
+  imageSrc: string | ArrayBuffer;
 
   constructor(private fb: FormBuilder,
     private authService: AuthService,
@@ -42,13 +43,13 @@ export class PushNotificationComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      selectedDistributor: ['single', Validators.required],
-      singleDistributorId: ['' ,Validators.required],
-      title: ['', Validators.required],
+      selectedDistributor: ['single'],
+      singleDistributorId: [''],
+      title: [''],
       multiple: [null], // for handling file uploads
-      imageType: ['Image', Validators.required],
+      // imageType: ['Image'],
       ImgUrl: [''],
-      message: ['', Validators.required]
+      message: ['']
     });
       
     // Conditionally enable or disable singleDistributorId based on selectedDistributor
@@ -59,17 +60,17 @@ export class PushNotificationComponent implements OnInit {
         this.form.get('singleDistributorId').disable();
       }
     });
-    this.form.get('imageType').valueChanges.subscribe(value => {
-      if (value === 'url') {
-        this.form.get('ImgUrl').setValidators(Validators.required);
-        this.form.get('ImgUrl').updateValueAndValidity();
-        // this.form.get('ImgUrl').enable();
-      } else {
-        this.form.get('ImgUrl').clearValidators();
-        this.form.get('ImgUrl').updateValueAndValidity();
-        // this.form.get('ImgUrl').disable();
-      }
-    });
+    // this.form.get('imageType').valueChanges.subscribe(value => {
+    //   if (value === 'url') {
+    //     this.form.get('ImgUrl').setValidators(Validators.required);
+    //     this.form.get('ImgUrl').updateValueAndValidity();
+    //     // this.form.get('ImgUrl').enable();
+    //   } else {
+    //     this.form.get('ImgUrl').clearValidators();
+    //     this.form.get('ImgUrl').updateValueAndValidity();
+    //     // this.form.get('ImgUrl').disable();
+    //   }
+    // });
   }
   distributeridarray : any 
   validateDist(data){
@@ -110,7 +111,7 @@ export class PushNotificationComponent implements OnInit {
     if(filenames[filenames.length-1]!=="csv")
     {
       this.alertService.error( null, 'Please Select CSV File.');
-      this.form.get('selectedDistributor').reset()
+      this.resetUploadFieldCsv()
        this.loaderService.isLoading(false);
     return
     }
@@ -149,29 +150,67 @@ export class PushNotificationComponent implements OnInit {
 
   onImageFileSelected(event: any): void {
     debugger
-    // event.target.files[0]=""
+   
     
     this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      
+      reader.onload = (e: any) => {
+        this.imageSrc = e.target.result; // Set the base64 string to imageSrc
+      };
+  
+      reader.readAsDataURL(this.selectedFile); // Read file as Data URL (base64)
+    }
     this.upload()
   }
-  upload(): void {
-    debugger
-    if (this.selectedFile) {
-      // Prepare the form data
-      const formData = new FormData();
-      formData.append('file', this.selectedFile);
-      formData.append('filetype', 'IMAGE');
+  resetUploadField(): void {
+    const inputField = document.getElementById('fileInput') as HTMLInputElement;
+    if (inputField) {
+      inputField.value = "";  // Clear the current files
+    }
+    this.imageSrc =''
+  }
 
-      this.PusNotificationService.imageUpload(formData).subscribe(event => {
-        console.log(event); // Handle the progress and response here
-        let imgUrl  :any  = event;
-         this.Imgurl =   imgUrl.fileUploadUri
-      
-      }, error => {
-        console.error('Upload error:', error);
-      });
+  resetUploadFieldCsv(): void {
+    const inputField = document.getElementById('CSVfile') as HTMLInputElement;
+    if (inputField) {
+      inputField.value = "";  // Clear the current files
     }
   }
+  upload(): void {
+    debugger; // Remember to remove or comment out debugger in production
+    if (this.selectedFile) {
+        // Check if the selected file is a JPEG or PNG
+        const validTypes = ['image/jpeg', 'image/png'];
+        if (!validTypes.includes(this.selectedFile.type)) {
+            // alert('Invalid file type. Only JPEG and PNG are allowed.');
+            this.alertService.error(null, 'Invalid file type. Only JPEG and PNG are allowed.');
+            this.resetUploadField();
+            return; // Stop the function if the file is not JPEG or PNG
+        }
+
+        // Prepare the form data
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+        formData.append('filetype', 'IMAGE');
+
+        this.PusNotificationService.imageUpload(formData).subscribe(
+            event => {
+                console.log('Upload successful', event);
+                let imgUrl: any = event; // Adjust based on the actual API response
+                this.Imgurl = imgUrl.fileUploadUri; // Adjust based on the actual API response
+            },
+            error => {
+                console.error('Upload error:', error);
+            }
+        );
+    } else {
+        console.error('No file selected.');
+    }
+    
+}
+
 
 
   onSubmit() {
@@ -183,12 +222,34 @@ export class PushNotificationComponent implements OnInit {
     debugger;
     if (this.form.valid) {
       // Assuming 'form' is a FormGroup and matches the keys used in the API
-      console.log(this.uploadedFiles);
+      // console.log(this.uploadedFiles);
     
      
       if(formData.selectedDistributor=='multiple'){
         
-
+          if(this.uploadedFiles ==undefined){
+            // alert("Please select the csv file")
+            this.alertService.error(null, "Please select the csv file");
+            this.loaderService.isLoading(false);
+            return
+          }
+          if(this.uploadedFiles ==undefined){
+            // alert("Please select the csv file")
+            this.alertService.error(null, "Please select the csv file");
+            this.loaderService.isLoading(false);
+            return
+          }
+         
+          else if(this.form.get('title').value==""){
+            this.alertService.error( null, 'Please enter the title.');
+            this.loaderService.isLoading(false);
+            return
+          }
+        else if( this.form.get('message').value==""){
+            this.alertService.error( null, 'Please enter the message.');
+            this.loaderService.isLoading(false);
+            return
+          }
         let notificationMultipleData= {
           "categoryId": formData.categoryId || null,
           "distributer_type": formData.distributerType ,
@@ -206,15 +267,40 @@ export class PushNotificationComponent implements OnInit {
           this.loaderService.isLoading(false);
           this.alertService.success(null, 'Notification Added Successfully.');
           // location.reload();
-          this.form.reset()
+          // this.form.reset()
+          this.form.get('singleDistributorId').reset();
+          this.form.get('title').reset();
+          this.form.get('message').reset()
+          this.resetUploadFieldCsv();
+          this.resetUploadField();
         }, error => {
           console.log(error)
           this.alertService.error(error.message, error.text);
           this.loaderService.isLoading(false);
+          this.form.get('singleDistributorId').reset();
+          this.form.get('title').reset();
+          this.form.get('message').reset()
+          this.resetUploadFieldCsv();
+          this.resetUploadField();
         });
 
       }
       else{
+        if(this.form.get('singleDistributorId').value==""){
+          this.alertService.error( null, 'Please enter the Distributor id.');
+          this.loaderService.isLoading(false);
+          return
+        }
+        else if(this.form.get('title').value==""){
+          this.alertService.error( null, 'Please enter the title.');
+          this.loaderService.isLoading(false);
+          return
+        }
+      else if( this.form.get('message').value==""){
+          this.alertService.error( null, 'Please enter the message.');
+          this.loaderService.isLoading(false);
+          return
+        }
         let formDataSingle = {
           "distributer_type": formData.distributerType || "single", // Using form data or default values
           "distributerid": formData.singleDistributorId,
@@ -237,7 +323,8 @@ export class PushNotificationComponent implements OnInit {
             this.form.get('singleDistributorId').reset();
             this.form.get('title').reset();
             this.form.get('message').reset();
-            this.form.get('imageType').reset()
+            // this.form.get('imageType').reset()
+            this.resetUploadField();
             this.loaderService.isLoading(false);
           },
           error => {
@@ -253,7 +340,11 @@ export class PushNotificationComponent implements OnInit {
     } else {
       // Optional: Provide user feedback for invalid form
       // alert('Please fill out the form correctly.');
+    
+      
+     
       this.alertService.error( null, 'Please fill out the form correctly.');
+      
       this.loaderService.isLoading(false);
     }
   }

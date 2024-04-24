@@ -15,16 +15,17 @@
         </div> 
         <div class="col-md-4" *ngIf="form.get('selectedDistributor').value === 'single'">
           <mat-form-field>
-            <input matInput placeholder="Enter Distributor ID"  (keydown.enter)="validateDist($event)" formControlName="singleDistributorId"
+            <input matInput placeholder="Enter Distributor ID *"  (keydown.enter)="validateDist($event)" formControlName="singleDistributorId"
             maxlength="10">
           </mat-form-field>
         </div>
         <div class="col-md-4" *ngIf="form.get('selectedDistributor').value === 'multiple'">
-          <input type="file" (change)="onFileSelected($event)">
+          <input type="file" (change)="onFileSelected($event)" id="CSVfile">
+          <label >Upload CSV File</label>
         </div>
         <div class="col-md-4">
           <mat-form-field>
-            <input matInput placeholder="Enter Title" formControlName="title">
+            <input matInput placeholder="Enter Title *" formControlName="title">
           </mat-form-field>
         </div>
       </div>
@@ -33,27 +34,33 @@
       <!-- Continue similar setup for other fields -->
      
         <div class="row">
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <mat-form-field>
               <mat-label>Image Type</mat-label>
               <mat-select formControlName="imageType">
-                <!-- <mat-option value="url">Image URL</mat-option> -->
+                 <mat-option value="url">Image URL</mat-option> 
                 <mat-option value="Image">Upload Image</mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-          <div class="col-md-4" *ngIf="form.get('imageType').value === 'url'">
+          </div> -->
+          <!-- <div class="col-md-6" *ngIf="form.get('imageType').value === 'url'">
             <mat-form-field>
               <input matInput placeholder="Enter URL" formControlName="ImgUrl">
             </mat-form-field>
-          </div>
-          <div class="col-md-4" *ngIf="form.get('imageType').value === 'Image'">
+          </div> -->
+          <div class="col-md-4" >
             <input type="file" (change)="onImageFileSelected($event)" id="fileInput">
-            <label for="fileInput">Choose File</label> <!-- Improved accessibility -->
+            <label for="fileInput">Upload Image</label> <!-- Improved accessibility -->
+          </div>
+          <div class="col-md-4">
+            <img *ngIf="imageSrc" [src]="imageSrc" alt="Uploaded Image" style="
+            width: 414px;
+            height: 150px;
+        ">
           </div>
           <div class="col-md-4">
             <mat-form-field>
-              <input matInput placeholder="Enter Message" formControlName="message" >
+              <input matInput placeholder="Enter Message *" formControlName="message" >
             </mat-form-field>
           </div>
          
