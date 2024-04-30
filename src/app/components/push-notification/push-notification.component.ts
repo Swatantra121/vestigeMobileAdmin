@@ -74,7 +74,7 @@ export class PushNotificationComponent implements OnInit {
   }
   distributeridarray : any 
   validateDist(data){
-    debugger
+    //
     const formData = this.form.value;
     const distributerid = data.target['value'];
     this.distributeridarray = [];
@@ -100,7 +100,7 @@ export class PushNotificationComponent implements OnInit {
     this.loaderService.isLoading(false);
   }
   onFileSelected(event: any) {
-    debugger
+    //
     this.valididarray = [];
     const target: DataTransfer = <DataTransfer>(event.target);
     if (target.files.length !== 1) {
@@ -149,7 +149,7 @@ export class PushNotificationComponent implements OnInit {
   };
 
   onImageFileSelected(event: any): void {
-    debugger
+    //
    
     
     this.selectedFile = event.target.files[0];
@@ -179,7 +179,7 @@ export class PushNotificationComponent implements OnInit {
     }
   }
   upload(): void {
-    debugger; // Remember to remove or comment out debugger in production
+    //; // Remember to remove or comment out // in production
     if (this.selectedFile) {
         // Check if the selected file is a JPEG or PNG
         const validTypes = ['image/jpeg', 'image/png'];
@@ -219,7 +219,7 @@ export class PushNotificationComponent implements OnInit {
     this.loaderService.isLoading(true);
 
     // this.upload()
-    debugger;
+    //;
     if (this.form.valid) {
       // Assuming 'form' is a FormGroup and matches the keys used in the API
       // console.log(this.uploadedFiles);
@@ -315,7 +315,7 @@ export class PushNotificationComponent implements OnInit {
           "message": formData.message,
           "sendToUsers": [formData.singleDistributorId] // Assuming distributerId is used here
         };
-        debugger
+        //
         this.PusNotificationService.pushNotificationAPI(formDataSingle).subscribe(
           data => {
             this.alertService.success(null, 'Notification Added Successfully.');
