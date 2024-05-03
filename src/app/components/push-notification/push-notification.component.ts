@@ -211,6 +211,15 @@ export class PushNotificationComponent implements OnInit {
     
 }
 
+resetFormAndCleanup(): void {
+  this.distributeridarray = [];
+  this.loaderService.isLoading(false);
+  this.form.get('singleDistributorId').reset();
+  this.form.get('title').reset();
+  this.form.get('message').reset();
+  this.resetUploadFieldCsv();
+  this.resetUploadField();
+}
 
 
   onSubmit() {
@@ -262,27 +271,22 @@ export class PushNotificationComponent implements OnInit {
           "skuCode": formData.skuCode || null,
           "title": formData.title,
         }
-        this.PusNotificationService.notificationRequest(notificationMultipleData,this.uploadedFiles).subscribe(res => {
-          this.distributeridarray = [];
-          this.loaderService.isLoading(false);
-          this.alertService.success(null, 'Notification Added Successfully.');
-          // location.reload();
-          // this.form.reset()
-          this.form.get('singleDistributorId').reset();
-          this.form.get('title').reset();
-          this.form.get('message').reset()
-          this.resetUploadFieldCsv();
-          this.resetUploadField();
-        }, error => {
-          console.log(error)
-          this.alertService.error(error.message, error.text);
-          this.loaderService.isLoading(false);
-          this.form.get('singleDistributorId').reset();
-          this.form.get('title').reset();
-          this.form.get('message').reset()
-          this.resetUploadFieldCsv();
-          this.resetUploadField();
-        });
+       
+     
+          this.PusNotificationService.notificationRequest(notificationMultipleData, this.uploadedFiles)
+        .subscribe(
+            res => {
+                this.resetFormAndCleanup(); // Reset form and other cleanup tasks
+                this.alertService.success(null, 'Notification Added Successfully.');
+            },
+            error => {
+                console.error(error); // Log the error to the console
+                this.alertService.error(error.message, error.text);
+                this.resetFormAndCleanup(); // Reset form and other cleanup tasks even in case of error
+            }
+        );
+      
+
 
       }
       else{

@@ -100,7 +100,8 @@ export class ApiService {
          
       }),
     };
-    return this.http.post(path, uploadData, config).pipe(catchError(this.formatErrors));
+    // console.log("CALLING TWICE")
+    return this.http.post(path, uploadData).pipe(catchError(this.formatErrors));
   }
   // uploadFile(file: File): Observable<HttpEvent<any>> {
   //   const formData: FormData = new FormData();
